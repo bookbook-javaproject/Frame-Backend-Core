@@ -9,7 +9,7 @@ Frame 메인 서비스 백엔드 어플리케이션 입니다.
 ### 1. 기본적으로 commit message는 아래와 같이 제목, 내용으로 구성한다.
 
 ```
-[{type}] {issue(pr) number} [content]
+[{type}] {issue(pr) number} {content}
 ```
 
 ### 2. commit type
