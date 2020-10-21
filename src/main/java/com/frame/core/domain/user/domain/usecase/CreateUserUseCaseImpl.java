@@ -1,6 +1,7 @@
 package com.frame.core.domain.user.domain.usecase;
 
 import com.frame.core.domain.user.domain.entity.User;
+import com.frame.core.domain.user.domain.exception.UserAlreadyExistsException;
 import com.frame.core.domain.user.domain.repository.UserRepository;
 import com.frame.core.domain.user.domain.service.PasswordService;
 import lombok.AllArgsConstructor;
@@ -15,6 +16,10 @@ public class CreateUserUseCaseImpl implements CreateUserUseCase {
 
     @Override
     public void run(String email, String nickname, String password) {
+        userRepository.findById(email).ifPresent(
+            user -> { throw new UserAlreadyExistsException();}
+        );
+
         userRepository.save(
                 User.builder()
                 .email(email)
