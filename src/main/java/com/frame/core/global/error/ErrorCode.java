@@ -8,7 +8,8 @@ import org.springframework.http.HttpStatus;
 @AllArgsConstructor
 public enum ErrorCode {
     BAD_REQUEST(400, "Bad Request"),
-    CONFLICT(409, "Conflict");
+    CONFLICT(409, "Conflict"),
+    UNAUTHORIZED(403, "UnAuthorized");
 
     private final int status;
 
