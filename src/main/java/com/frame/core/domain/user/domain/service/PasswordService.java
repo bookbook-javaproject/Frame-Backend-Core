@@ -5,4 +5,6 @@ import org.springframework.stereotype.Component;
 
 public interface PasswordService {
     public String encode(String password);
+
+    public boolean matches(String password, String hashedPassword);
 }
