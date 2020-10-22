@@ -1,6 +1,7 @@
 package com.frame.core.domain.user.controller;
 
 
+import com.frame.core.domain.user.dto.ChangePasswordRequest;
 import com.frame.core.domain.user.dto.RegisterRequest;
 import com.frame.core.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -20,4 +21,11 @@ public class UserController {
     public void registerAccount(@RequestBody @Valid RegisterRequest request) {
         userService.registerService(request);
     }
+
+    @PatchMapping("/password")
+    @ResponseStatus(value = HttpStatus.OK)
+    public void changePassword(@RequestBody @Valid ChangePasswordRequest request) {
+        userService.changePasswordService(request);
+    }
+
 }
