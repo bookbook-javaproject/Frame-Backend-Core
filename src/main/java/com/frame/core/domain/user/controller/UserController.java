@@ -1,6 +1,8 @@
 package com.frame.core.domain.user.controller;
 
 
+import com.frame.core.domain.user.dto.LoginRequest;
+import com.frame.core.domain.user.dto.LoginResponse;
 import com.frame.core.domain.user.dto.ChangePasswordRequest;
 import com.frame.core.domain.user.dto.RegisterRequest;
 import com.frame.core.domain.user.service.UserService;
@@ -20,6 +22,12 @@ public class UserController {
     @ResponseStatus(value = HttpStatus.CREATED)
     public void registerAccount(@RequestBody @Valid RegisterRequest request) {
         userService.registerService(request);
+    }
+
+    @PostMapping("/auth")
+    @ResponseStatus(value = HttpStatus.OK)
+    public LoginResponse login(@RequestBody @Valid LoginRequest request) {
+        return userService.login(request);
     }
 
     @PatchMapping("/password")
