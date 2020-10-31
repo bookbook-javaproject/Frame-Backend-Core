@@ -14,7 +14,7 @@ public class PasswordServiceImpl implements PasswordService {
 
     @Override
     public boolean matches(String password, String hashedPassword) {
-        return passwordEncoder().matches(password, hashedPassword)
+        return passwordEncoder().matches(password, hashedPassword);
     }
 
     private PasswordEncoder passwordEncoder() {
