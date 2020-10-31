@@ -1,14 +1,13 @@
 package com.frame.core.domain.user.domain.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+@Getter
 @Builder
 @Entity
 @Table(name = "tbl_user")
@@ -23,4 +22,9 @@ public class User {
 
     @Column(nullable = false, length = 60)
     private String password;
+
+    public User changePassword(String newPassword) {
+        this.password = newPassword;
+        return this;
+    }
 }

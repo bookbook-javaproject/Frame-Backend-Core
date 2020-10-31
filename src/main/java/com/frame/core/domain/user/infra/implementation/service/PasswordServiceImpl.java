@@ -12,6 +12,11 @@ public class PasswordServiceImpl implements PasswordService {
         return passwordEncoder().encode(password);
     }
 
+    @Override
+    public boolean matches(String password, String hashedPassword) {
+        return passwordEncoder().matches(password, hashedPassword);
+    }
+
     private PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder(10);
     }
