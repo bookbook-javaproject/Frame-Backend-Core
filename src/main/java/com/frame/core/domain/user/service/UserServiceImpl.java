@@ -7,6 +7,7 @@ import com.frame.core.domain.user.dto.ChangePasswordRequest;
 import com.frame.core.domain.user.dto.LoginRequest;
 import com.frame.core.domain.user.dto.LoginResponse;
 import com.frame.core.domain.user.dto.RegisterRequest;
+import com.frame.core.infra.springBoot.security.AuthenticationFacade;
 import com.frame.core.infra.springBoot.security.JwtProvider;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,7 @@ public class UserServiceImpl implements UserService {
     private final ChangePasswordUseCase changePasswordUseCase;
 
     private final JwtProvider jwtProvider;
+    private final AuthenticationFacade authenticationFacade;
 
     @Override
     public void registerService(RegisterRequest request) {
@@ -36,6 +38,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void changePasswordService(ChangePasswordRequest request) {
-        changePasswordUseCase.run("temporaryEmail", request.getCurrentPassword(), request.getNewPassword());
+        changePasswordUseCase.run(authenticationFacade.getEmail(), request.getCurrentPassword(), request.getNewPassword());
     }
 }
