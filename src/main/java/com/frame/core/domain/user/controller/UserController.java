@@ -1,10 +1,7 @@
 package com.frame.core.domain.user.controller;
 
 
-import com.frame.core.domain.user.dto.LoginRequest;
-import com.frame.core.domain.user.dto.LoginResponse;
-import com.frame.core.domain.user.dto.ChangePasswordRequest;
-import com.frame.core.domain.user.dto.RegisterRequest;
+import com.frame.core.domain.user.dto.*;
 import com.frame.core.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -36,4 +33,9 @@ public class UserController {
         userService.changePasswordService(request);
     }
 
+    @PutMapping("/profile")
+    @ResponseStatus(value = HttpStatus.OK)
+    public void setProfile(@RequestBody @Valid SetProfileRequest request) {
+        userService.setProfile(request);
+    }
 }
