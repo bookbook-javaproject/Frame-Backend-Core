@@ -14,7 +14,7 @@ public class ChangePasswordUseCaseImpl implements ChangePasswordUseCase {
     private final PasswordService passwordService;
 
     @Override
-    public void run(String email, String currentPassword, String newPassword) {
+    public void execute(String email, String currentPassword, String newPassword) {
         userRepository.findById(email).ifPresent(user -> {
             if (passwordService.matches(currentPassword, user.getPassword())) {
                 user.changePassword(passwordService.encode(newPassword));
