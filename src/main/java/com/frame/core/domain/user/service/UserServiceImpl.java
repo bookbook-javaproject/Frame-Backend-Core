@@ -3,10 +3,9 @@ package com.frame.core.domain.user.service;
 import com.frame.core.domain.user.domain.usecase.CertifyUserUseCase;
 import com.frame.core.domain.user.domain.usecase.ChangePasswordUseCase;
 import com.frame.core.domain.user.domain.usecase.CreateUserUseCase;
-import com.frame.core.domain.user.dto.ChangePasswordRequest;
-import com.frame.core.domain.user.dto.LoginRequest;
-import com.frame.core.domain.user.dto.LoginResponse;
-import com.frame.core.domain.user.dto.RegisterRequest;
+import com.frame.core.domain.user.domain.usecase.SetProfileUseCase;
+import com.frame.core.domain.user.dto.*;
+import com.frame.core.infra.springBoot.security.AuthenticationFacade;
 import com.frame.core.infra.springBoot.security.JwtProvider;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,17 +16,19 @@ public class UserServiceImpl implements UserService {
     private final CreateUserUseCase createUserUseCase;
     private final CertifyUserUseCase certifyUserUseCase;
     private final ChangePasswordUseCase changePasswordUseCase;
+    private final SetProfileUseCase setProfileUseCase;
 
     private final JwtProvider jwtProvider;
+    private final AuthenticationFacade authenticationFacade;
 
     @Override
     public void registerService(RegisterRequest request) {
-        createUserUseCase.run(request.getEmail(), request.getNickname(), request.getPassword());
+        createUserUseCase.execute(request.getEmail(), request.getNickname(), request.getPassword());
     }
 
     @Override
     public LoginResponse login(LoginRequest request) {
-        certifyUserUseCase.run(request.getEmail(), request.getPassword());
+        certifyUserUseCase.execute(request.getEmail(), request.getPassword());
         return LoginResponse.builder()
                 .accessToken(jwtProvider.generateAccessToken(request.getEmail()))
                 .refreshToken(jwtProvider.generateRefreshToken(request.getEmail()))
@@ -36,6 +37,19 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void changePasswordService(ChangePasswordRequest request) {
-        changePasswordUseCase.run("temporaryEmail", request.getCurrentPassword(), request.getNewPassword());
+        changePasswordUseCase.execute(
+                authenticationFacade.getEmail(),
+                request.getCurrentPassword(),
+                request.getNewPassword());
+    }
+
+    @Override
+    public void setProfile(SetProfileRequest request) {
+        setProfileUseCase.execute(
+                authenticationFacade.getEmail(),
+                request.getNickname(),
+                request.getDescription(),
+                request.getFavoriteType(),
+                request.getImageUri());
     }
 }
