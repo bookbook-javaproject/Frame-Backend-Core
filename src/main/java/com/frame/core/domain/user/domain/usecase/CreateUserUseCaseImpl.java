@@ -15,7 +15,7 @@ public class CreateUserUseCaseImpl implements CreateUserUseCase {
     private final PasswordService passwordService;
 
     @Override
-    public void run(String email, String nickname, String password) {
+    public void execute(String email, String nickname, String password) {
         userRepository.findById(email).ifPresent(
             user -> { throw new UserAlreadyExistsException();}
         );
@@ -27,5 +27,7 @@ public class CreateUserUseCaseImpl implements CreateUserUseCase {
                 .password(passwordService.encode(password))
                 .build()
         );
+
+
     }
 }

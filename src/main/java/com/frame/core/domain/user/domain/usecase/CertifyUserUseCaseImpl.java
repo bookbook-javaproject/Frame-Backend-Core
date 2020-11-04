@@ -15,7 +15,7 @@ public class CertifyUserUseCaseImpl implements CertifyUserUseCase {
     private final PasswordService passwordService;
 
     @Override
-    public void run(String email, String password) {
+    public void execute(String email, String password) {
         userRepository.findById(email)
                 .filter(user -> passwordService.matches(password, user.getPassword()))
                 .orElseThrow(AuthenticationFailedException::new);
