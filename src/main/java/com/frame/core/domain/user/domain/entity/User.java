@@ -24,6 +24,9 @@ public class User {
     @Column(nullable = true, length = 255)
     private String description;
 
+    @Column(nullable = false)
+    private boolean certified;
+
     @Enumerated(EnumType.STRING)
     private FavoriteType favoriteType;
 
@@ -49,4 +52,6 @@ public class User {
     public void changeImageUri(String imageUri) {
         this.imageUri = imageUri;
     }
+
+    public void certifyUser() {this.certified = true; }
 }
