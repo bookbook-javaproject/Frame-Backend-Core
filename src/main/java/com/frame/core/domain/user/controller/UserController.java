@@ -42,4 +42,9 @@ public class UserController {
     @PutMapping("/relation")
     @ResponseStatus(value = HttpStatus.OK)
     public void setRelation(@RequestBody @Valid RelationRequest request) { userService.setRelation(request); }
+
+    @GetMapping("/relation")
+    @ResponseStatus(value = HttpStatus.OK)
+    public GetRelationResponse getRelation(@RequestParam("email") String email) {
+        return userService.getRelation(email); }
 }
