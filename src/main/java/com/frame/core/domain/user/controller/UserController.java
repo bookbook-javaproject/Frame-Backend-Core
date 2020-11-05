@@ -30,8 +30,6 @@ public class UserController {
     @PatchMapping("/password")
     @ResponseStatus(value = HttpStatus.OK)
     public void changePassword(@RequestBody @Valid ChangePasswordRequest request) { userService.changePasswordService(request); }
-        userService.changePasswordService(request);
-    }
 
     @PutMapping("/profile")
     @ResponseStatus(value = HttpStatus.OK)
@@ -47,4 +45,9 @@ public class UserController {
     @ResponseStatus(value = HttpStatus.OK)
     public GetRelationResponse getRelation(@RequestParam("email") String email) {
         return userService.getRelation(email); }
+
+    @GetMapping("/relation/number")
+    @ResponseStatus(value = HttpStatus.OK)
+    public GetRelationNumberResponse getRelationNumber(@RequestParam("email") String email) {
+        return userService.getRelationNumber(email); }
 }
