@@ -9,11 +9,12 @@ import java.util.List;
 
 @Component
 @RequiredArgsConstructor
-public class GetFollwingUseCaseImpl implements GetFollowingUseCase {
+public class GetFollowingUseCaseImpl implements GetFollowingUseCase {
     private final RelationshipRepository relationshipRepository;
 
     @Override
     public List<String> execute(String email) {
-        return relationshipRepository.findByEmail(email).orElseThrow(NotFoundException::new).getFollowing();
+        return relationshipRepository.findByEmail(email)
+                .orElseThrow(NotFoundException::new).getFollowing();
     }
 }
