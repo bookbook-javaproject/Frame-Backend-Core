@@ -29,7 +29,7 @@ public class UserController {
 
     @PatchMapping("/password")
     @ResponseStatus(value = HttpStatus.OK)
-    public void changePassword(@RequestBody @Valid ChangePasswordRequest request) {
+    public void changePassword(@RequestBody @Valid ChangePasswordRequest request) { userService.changePasswordService(request); }
         userService.changePasswordService(request);
     }
 
@@ -38,4 +38,8 @@ public class UserController {
     public void setProfile(@RequestBody @Valid SetProfileRequest request) {
         userService.setProfile(request);
     }
+
+    @PutMapping("/relation")
+    @ResponseStatus(value = HttpStatus.OK)
+    public void setRelation(@RequestBody @Valid RelationRequest request) { userService.setRelation(request); }
 }
