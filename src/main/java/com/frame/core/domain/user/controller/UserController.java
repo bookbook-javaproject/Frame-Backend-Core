@@ -27,6 +27,16 @@ public class UserController {
         return userService.login(request);
     }
 
+    @GetMapping("/auth")
+    @ResponseStatus(value = HttpStatus.OK)
+    public void certifyAuthCode(@RequestParam("auth-code") String authCode) {
+        userService.certifyAuthCode(authCode);
+    }
+
+    @PostMapping("/password/auth-code")
+    @ResponseStatus(value = HttpStatus.OK)
+    public void sendAuthCode(@RequestBody @Valid GetAuthCodeRequest request) { userService.getAuthCode(request); }
+
     @PatchMapping("/password")
     @ResponseStatus(value = HttpStatus.OK)
     public void changePassword(@RequestBody @Valid ChangePasswordRequest request) { userService.changePasswordService(request); }
