@@ -17,6 +17,8 @@ public class UserServiceImpl implements UserService {
     private final FollowUserUseCase followUserUseCase;
     private final GetFollowingUseCase getFollowingUseCase;
     private final GetFollowerUseCase getFollowerUseCase;
+    private final SendAuthEmailUseCase sendAuthEmailUseCase;
+    private final CertifyAuthCodeUseCase certifyAuthCodeUseCase;
 
     private final JwtProvider jwtProvider;
     private final AuthenticationFacade authenticationFacade;
@@ -24,6 +26,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void registerService(RegisterRequest request) {
         createUserUseCase.execute(request.getEmail(), request.getNickname(), request.getPassword());
+        sendAuthEmailUseCase.execute(request.getEmail());
     }
 
     @Override
@@ -37,10 +40,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void changePasswordService(ChangePasswordRequest request) {
-        changePasswordUseCase.execute(
-                authenticationFacade.getEmail(),
-                request.getCurrentPassword(),
-                request.getNewPassword());
+        changePasswordUseCase.execute(request.getAuthCode(), request.getNewPassword());
     }
 
     @Override
@@ -75,5 +75,15 @@ public class UserServiceImpl implements UserService {
                 .follower(getFollowerUseCase.execute(email).size())
                 .following(getFollowingUseCase.execute(email).size())
                 .build();
+    }
+
+    @Override
+    public void getAuthCode(GetAuthCodeRequest request) {
+        sendAuthEmailUseCase.execute(request.getEmail());
+    }
+
+    @Override
+    public void certifyAuthCode(String authCode) {
+        certifyAuthCodeUseCase.execute(authCode);
     }
 }

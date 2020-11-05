@@ -16,4 +16,8 @@ public interface UserService {
     public GetRelationResponse getRelation(String email);
 
     public GetRelationNumberResponse getRelationNumber(String email);
+
+    public void getAuthCode(GetAuthCodeRequest request);
+
+    public void certifyAuthCode(String authCode);
 }
