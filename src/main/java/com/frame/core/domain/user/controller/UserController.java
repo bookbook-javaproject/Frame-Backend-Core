@@ -29,13 +29,25 @@ public class UserController {
 
     @PatchMapping("/password")
     @ResponseStatus(value = HttpStatus.OK)
-    public void changePassword(@RequestBody @Valid ChangePasswordRequest request) {
-        userService.changePasswordService(request);
-    }
+    public void changePassword(@RequestBody @Valid ChangePasswordRequest request) { userService.changePasswordService(request); }
 
     @PutMapping("/profile")
     @ResponseStatus(value = HttpStatus.OK)
     public void setProfile(@RequestBody @Valid SetProfileRequest request) {
         userService.setProfile(request);
     }
+
+    @PutMapping("/relation")
+    @ResponseStatus(value = HttpStatus.OK)
+    public void setRelation(@RequestBody @Valid RelationRequest request) { userService.setRelation(request); }
+
+    @GetMapping("/relation")
+    @ResponseStatus(value = HttpStatus.OK)
+    public GetRelationResponse getRelation(@RequestParam("email") String email) {
+        return userService.getRelation(email); }
+
+    @GetMapping("/relation/number")
+    @ResponseStatus(value = HttpStatus.OK)
+    public GetRelationNumberResponse getRelationNumber(@RequestParam("email") String email) {
+        return userService.getRelationNumber(email); }
 }

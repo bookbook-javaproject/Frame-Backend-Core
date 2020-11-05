@@ -1,9 +1,6 @@
 package com.frame.core.domain.user.service;
 
-import com.frame.core.domain.user.domain.usecase.CertifyUserUseCase;
-import com.frame.core.domain.user.domain.usecase.ChangePasswordUseCase;
-import com.frame.core.domain.user.domain.usecase.CreateUserUseCase;
-import com.frame.core.domain.user.domain.usecase.SetProfileUseCase;
+import com.frame.core.domain.user.domain.usecase.*;
 import com.frame.core.domain.user.dto.*;
 import com.frame.core.infra.springBoot.security.AuthenticationFacade;
 import com.frame.core.infra.springBoot.security.JwtProvider;
@@ -17,6 +14,9 @@ public class UserServiceImpl implements UserService {
     private final CertifyUserUseCase certifyUserUseCase;
     private final ChangePasswordUseCase changePasswordUseCase;
     private final SetProfileUseCase setProfileUseCase;
+    private final FollowUserUseCase followUserUseCase;
+    private final GetFollowingUseCase getFollowingUseCase;
+    private final GetFollowerUseCase getFollowerUseCase;
 
     private final JwtProvider jwtProvider;
     private final AuthenticationFacade authenticationFacade;
@@ -51,5 +51,29 @@ public class UserServiceImpl implements UserService {
                 request.getDescription(),
                 request.getFavoriteType(),
                 request.getImageUri());
+    }
+
+    @Override
+    public void setRelation(RelationRequest request) {
+        followUserUseCase.execute(
+                authenticationFacade.getEmail(),
+                request.getEmail()
+        );
+    }
+
+    @Override
+    public GetRelationResponse getRelation(String email) {
+       return GetRelationResponse.builder()
+               .follower(getFollowerUseCase.execute(email))
+               .following(getFollowingUseCase.execute(email))
+               .build();
+    }
+
+    @Override
+    public GetRelationNumberResponse getRelationNumber(String email) {
+        return GetRelationNumberResponse.builder()
+                .follower(getFollowerUseCase.execute(email).size())
+                .following(getFollowingUseCase.execute(email).size())
+                .build();
     }
 }
