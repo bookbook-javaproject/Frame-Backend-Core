@@ -10,8 +10,8 @@ import javax.validation.constraints.Size;
 @Getter
 public class ChangePasswordRequest {
     @NotEmpty
-    @Size(min = 6, max = 30)
-    private String currentPassword;
+    @Size(min = 36, max= 36)
+    private String authCode;
 
     @NotEmpty
     @Size(min = 6, max = 30)
