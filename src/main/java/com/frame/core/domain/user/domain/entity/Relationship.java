@@ -2,13 +2,15 @@ package com.frame.core.domain.user.domain.entity;
 
 import com.mongodb.BasicDBObject;
 import lombok.Builder;
+import lombok.Getter;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.Id;
 import java.util.List;
 
 @Builder
-@Document(collation = "col_relationship")
+@Getter
+@Document(collection = "col_relationship")
 public class Relationship {
     @Id
     private String email;
