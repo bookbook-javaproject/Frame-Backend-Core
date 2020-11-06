@@ -15,13 +15,11 @@ import javax.validation.Valid;
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
-    private final AuthenticationFacade authenticationFacade;
 
     @GetMapping
     @ResponseStatus(value = HttpStatus.OK)
     public GetUserResponse getUser() {
-        String email = authenticationFacade.getEmail();
-        return userService.getUser(email);
+        return userService.getUser();
     }
 
     @PostMapping
