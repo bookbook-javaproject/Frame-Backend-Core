@@ -15,6 +15,12 @@ import javax.validation.Valid;
 public class UserController {
     private final UserService userService;
 
+    @GetMapping
+    @ResponseStatus(value = HttpStatus.OK)
+    public GetUserResponse getUser() {
+        return userService.getUser();
+    }
+
     @PostMapping
     @ResponseStatus(value = HttpStatus.CREATED)
     public void registerAccount(@RequestBody @Valid RegisterRequest request) {
