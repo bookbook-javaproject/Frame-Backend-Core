@@ -11,4 +11,6 @@ public class GetUserResponse {
     private String nickname;
 
     private String imageUri;
+
+    private String description;
 }
