@@ -18,7 +18,7 @@ public class UserController {
     private final AuthenticationFacade authenticationFacade;
 
     @GetMapping
-    @ResponseStatus(value = HttpStatus.FOUND)
+    @ResponseStatus(value = HttpStatus.OK)
     public GetUserResponse getUser() {
         String email = authenticationFacade.getEmail();
         return userService.getUser(email);
