@@ -3,7 +3,6 @@ package com.frame.core.domain.user.controller;
 
 import com.frame.core.domain.user.dto.*;
 import com.frame.core.domain.user.service.UserService;
-import com.frame.core.infra.springBoot.security.AuthenticationFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
