@@ -26,8 +26,8 @@ public class UserServiceImpl implements UserService {
     private final AuthenticationFacade authenticationFacade;
 
     @Override
-    public GetUserResponse getUser(String email) {
-        User user = getUserUseCase.execute(email);
+    public GetUserResponse getUser() {
+        User user = getUserUseCase.execute(authenticationFacade.getEmail());
         return GetUserResponse.builder()
                 .email(user.getEmail())
                 .nickname(user.getNickname())
