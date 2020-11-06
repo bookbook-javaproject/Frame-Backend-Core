@@ -1,5 +1,6 @@
 package com.frame.core.domain.user.service;
 
+import com.frame.core.domain.user.domain.entity.User;
 import com.frame.core.domain.user.domain.usecase.*;
 import com.frame.core.domain.user.dto.*;
 import com.frame.core.infra.springBoot.security.AuthenticationFacade;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 @Service
 @AllArgsConstructor
 public class UserServiceImpl implements UserService {
+    private final GetUserUseCase getUserUseCase;
     private final CreateUserUseCase createUserUseCase;
     private final CertifyUserUseCase certifyUserUseCase;
     private final ChangePasswordUseCase changePasswordUseCase;
@@ -22,6 +24,16 @@ public class UserServiceImpl implements UserService {
 
     private final JwtProvider jwtProvider;
     private final AuthenticationFacade authenticationFacade;
+
+    @Override
+    public GetUserResponse getUser(String email) {
+        User user = getUserUseCase.execute(email);
+        return GetUserResponse.builder()
+                .email(user.getEmail())
+                .nickname(user.getNickname())
+                .imageUri(user.getImageUri())
+                .build();
+    }
 
     @Override
     public void registerService(RegisterRequest request) {
