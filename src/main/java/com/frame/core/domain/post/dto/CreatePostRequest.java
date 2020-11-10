@@ -6,7 +6,7 @@ import lombok.Getter;
 public class CreatePostRequest {
     private String content;
 
-    private String postType;
+    private String contentType;
 
     private String accessType;
 }
