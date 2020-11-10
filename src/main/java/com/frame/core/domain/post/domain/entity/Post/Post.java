@@ -1,9 +1,14 @@
 package com.frame.core.domain.post.domain.entity.Post;
 
+import com.frame.core.domain.post.domain.entity.Post.enums.AccessType;
+import com.frame.core.domain.post.domain.entity.Post.enums.ContentType;
+import lombok.Builder;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
+@Builder
 @Table(name = "tbl_post")
 public class Post {
     @Id
@@ -13,6 +18,14 @@ public class Post {
 
     @Column(name = "content", length = 1000)
     private String content;
+
+    @Column(name = "content_type")
+    @Enumerated(EnumType.STRING)
+    private ContentType contentType;
+
+    @Column(name = "access_type")
+    @Enumerated(EnumType.STRING)
+    private AccessType accessType;
 
     @Column(name = "writer", length = 255)
     private String writer;
