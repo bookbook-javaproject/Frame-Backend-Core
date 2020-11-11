@@ -3,12 +3,14 @@ package com.frame.core.domain.post.domain.entity.Post;
 import com.frame.core.domain.post.domain.entity.Post.enums.AccessType;
 import com.frame.core.domain.post.domain.entity.Post.enums.ContentType;
 import lombok.Builder;
+import lombok.Getter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
 @Builder
+@Getter
 @Table(name = "tbl_post")
 public class Post {
     @Id
