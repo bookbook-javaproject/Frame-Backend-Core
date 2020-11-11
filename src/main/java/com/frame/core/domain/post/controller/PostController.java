@@ -1,16 +1,23 @@
 package com.frame.core.domain.post.controller;
 
+import com.frame.core.domain.post.dto.CreatePostRequest;
+import com.frame.core.domain.post.service.PostService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/post")
 @RequiredArgsConstructor
 public class PostController {
-    public void createPost() {
+    private final PostService postService;
 
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public void createPost(@RequestBody @Valid CreatePostRequest request) {
+        postService.createPost(request);
     }
 
     public void getPosts() {
