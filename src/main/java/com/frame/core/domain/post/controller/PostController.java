@@ -1,5 +1,6 @@
 package com.frame.core.domain.post.controller;
 
+import com.frame.core.domain.post.dto.CommentRequest;
 import com.frame.core.domain.post.dto.CreatePostRequest;
 import com.frame.core.domain.post.service.PostService;
 import lombok.RequiredArgsConstructor;
@@ -33,8 +34,10 @@ public class PostController {
 
     }
 
-    public void comment() {
-
+    @PostMapping("/comment")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void comment(@RequestBody @Valid CommentRequest request) {
+        postService.comment(request);
     }
 
     public void heart() {

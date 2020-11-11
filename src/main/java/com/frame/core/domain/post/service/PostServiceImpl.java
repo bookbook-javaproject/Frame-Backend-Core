@@ -1,6 +1,8 @@
 package com.frame.core.domain.post.service;
 
+import com.frame.core.domain.post.domain.usecase.CommentUseCase;
 import com.frame.core.domain.post.domain.usecase.CreatePostUseCase;
+import com.frame.core.domain.post.dto.CommentRequest;
 import com.frame.core.domain.post.dto.CreatePostRequest;
 import com.frame.core.infra.springBoot.security.AuthenticationFacade;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +15,7 @@ public class PostServiceImpl implements PostService {
     private final AuthenticationFacade authenticationFacade;
 
     private final CreatePostUseCase createPostUseCase;
+    private final CommentUseCase commentUseCase;
 
     @Override
     public void createPost(CreatePostRequest request) {
@@ -21,6 +24,15 @@ public class PostServiceImpl implements PostService {
                 request.getContent(),
                 request.getContentType(),
                 request.getAccessType()
+        );
+    }
+
+    @Override
+    public void comment(CommentRequest request) {
+        commentUseCase.execute(
+                authenticationFacade.getEmail(),
+                request.getPostId(),
+                request.getComment()
         );
     }
 }
