@@ -22,7 +22,7 @@ public class GetPostsUseCaseImpl implements GetPostsUseCase {
     @Override
     public Iterable<Post> execute(String sortType) {
         if (sortType.equals("recency")) {
-            return postRepository.findAllByAccessType_Public();
+            return postRepository.findAllByAccessType("PUBLIC");
 
 //            for (Post post: allPosts) {
 //                postDetailRepository.findById(post.getPostNumber()).ifPresent(
