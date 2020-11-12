@@ -31,7 +31,7 @@ public class PostController {
     }
 
     @GetMapping("/detail")
-    public GetDetailPostResponse getPostDetail(@RequestParam Long postId) {
+    public GetPostDetailResponse getPostDetail(@RequestParam Long postId) {
         return postService.getPostDetail(postId);
     }
 
