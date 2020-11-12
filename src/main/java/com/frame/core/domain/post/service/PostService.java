@@ -1,8 +1,6 @@
 package com.frame.core.domain.post.service;
 
-import com.frame.core.domain.post.dto.CommentRequest;
-import com.frame.core.domain.post.dto.CreatePostRequest;
-import com.frame.core.domain.post.dto.SympathizeRequest;
+import com.frame.core.domain.post.dto.*;
 
 public interface PostService {
     public void createPost(CreatePostRequest request);
@@ -10,4 +8,6 @@ public interface PostService {
     public void comment(CommentRequest request);
 
     public void sympathize(SympathizeRequest request);
+
+    public GetPostResponse getPosts(GetPostRequest request);
 }
