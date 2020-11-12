@@ -3,6 +3,8 @@ package com.frame.core.domain.post.dto;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.time.LocalDateTime;
+
 @Builder
 @Getter
 public class PostPreview {
@@ -10,7 +12,7 @@ public class PostPreview {
 
     private String writerEmail;
 
-    private String createdAt;
+    private LocalDateTime createdAt;
 
     private String content;
 

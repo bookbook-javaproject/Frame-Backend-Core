@@ -4,6 +4,7 @@ import com.frame.core.domain.post.domain.entity.Post.Post;
 import com.frame.core.domain.post.domain.entity.Post.PostDetail;
 import com.frame.core.domain.post.domain.repository.PostDetailRepository;
 import com.frame.core.domain.post.domain.repository.PostRepository;
+import com.frame.core.global.exceptions.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -33,5 +34,6 @@ public class GetPostsUseCaseImpl implements GetPostsUseCase {
         } else {
             // TODO 필터 추가
         }
+        throw new NotFoundException(); // TODO BAD REQUEST EXCEPTION
     }
 }

@@ -1,9 +1,7 @@
 package com.frame.core.domain.post.controller;
 
 import com.frame.core.domain.post.domain.usecase.SympathizeUseCase;
-import com.frame.core.domain.post.dto.CommentRequest;
-import com.frame.core.domain.post.dto.CreatePostRequest;
-import com.frame.core.domain.post.dto.SympathizeRequest;
+import com.frame.core.domain.post.dto.*;
 import com.frame.core.domain.post.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -23,8 +21,10 @@ public class PostController {
         postService.createPost(request);
     }
 
-    public void getPosts() {
-
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    public GetPostResponse getPosts(@RequestBody @Valid GetPostRequest request) {
+        return postService.getPosts(request);
     }
 
     public void getUserPosts() {
