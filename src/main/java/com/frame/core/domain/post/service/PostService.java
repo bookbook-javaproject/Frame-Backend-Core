@@ -11,5 +11,5 @@ public interface PostService {
 
     public GetPostResponse getPosts(GetPostRequest request);
 
-    public GetDetailPostResponse getDetailPost(Long postId);
+    public GetDetailPostResponse getPostDetail(Long postId);
 }
