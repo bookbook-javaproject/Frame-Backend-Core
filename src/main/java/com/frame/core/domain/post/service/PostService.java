@@ -10,4 +10,6 @@ public interface PostService {
     public void sympathize(SympathizeRequest request);
 
     public GetPostResponse getPosts(GetPostRequest request);
+
+    public GetPostDetailResponse getPostDetail(Long postId);
 }

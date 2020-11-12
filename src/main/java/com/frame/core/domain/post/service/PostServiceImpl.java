@@ -1,7 +1,6 @@
 package com.frame.core.domain.post.service;
 
 import com.frame.core.domain.post.domain.entity.Post.Post;
-import com.frame.core.domain.post.domain.entity.Post.PostDetail;
 import com.frame.core.domain.post.domain.usecase.*;
 import com.frame.core.domain.post.dto.*;
 import com.frame.core.infra.springBoot.security.AuthenticationFacade;
@@ -9,7 +8,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 
@@ -22,6 +20,7 @@ public class PostServiceImpl implements PostService {
     private final CommentUseCase commentUseCase;
     private final SympathizeUseCase sympathizeUseCase;
     private final GetPostsUseCase getPostsUseCase;
+    private final GetPostDetailUseCase getPostDetailUseCase;
     private final GetCommentsUseCase getCommentsUseCase;
     private final GetHeartsUseCase getHeartsUseCase;
 
@@ -66,5 +65,18 @@ public class PostServiceImpl implements PostService {
             .build());
         }
         return GetPostResponse.builder().posts(postPreviews).build();
+    }
+
+    @Override
+    public GetPostDetailResponse getPostDetail(Long postId) {
+        Post post = getPostDetailUseCase.execute(authenticationFacade.getEmail(), postId);
+        return GetPostDetailResponse.builder()
+                .postId(postId)
+                .writer(post.getWriter())
+                .content(post.getContent())
+                .createdAt(post.getCreatedAt())
+                .hearts(getHeartsUseCase.execute(postId))
+                .comments(getCommentsUseCase.execute(postId))
+                .build();
     }
 }

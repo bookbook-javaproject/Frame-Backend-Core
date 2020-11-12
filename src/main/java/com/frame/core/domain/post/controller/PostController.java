@@ -1,6 +1,5 @@
 package com.frame.core.domain.post.controller;
 
-import com.frame.core.domain.post.domain.usecase.SympathizeUseCase;
 import com.frame.core.domain.post.dto.*;
 import com.frame.core.domain.post.service.PostService;
 import lombok.RequiredArgsConstructor;
@@ -32,8 +31,8 @@ public class PostController {
     }
 
     @GetMapping("/detail")
-    public void getPost() {
-
+    public GetPostDetailResponse getPostDetail(@RequestParam Long postId) {
+        return postService.getPostDetail(postId);
     }
 
     @PostMapping("/comment")
