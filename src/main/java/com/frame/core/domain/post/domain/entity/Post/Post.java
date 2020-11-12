@@ -2,8 +2,10 @@ package com.frame.core.domain.post.domain.entity.Post;
 
 import com.frame.core.domain.post.domain.entity.Post.enums.AccessType;
 import com.frame.core.domain.post.domain.entity.Post.enums.ContentType;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -12,6 +14,8 @@ import java.time.LocalDateTime;
 @Builder
 @Getter
 @Table(name = "tbl_post")
+@NoArgsConstructor
+@AllArgsConstructor
 public class Post {
     @Id
     @Column(name = "post_number")
