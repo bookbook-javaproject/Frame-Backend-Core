@@ -35,6 +35,12 @@ public class PostController {
         return postService.getPostDetail(postId);
     }
 
+    @DeleteMapping("/detail")
+    @ResponseStatus(HttpStatus.OK)
+    public void deletePostDetail(@RequestParam Long postId) {
+        postService.deletePostDetail(postId);
+    }
+
     @PostMapping("/comment")
     @ResponseStatus(HttpStatus.CREATED)
     public void comment(@RequestBody @Valid CommentRequest request) {
