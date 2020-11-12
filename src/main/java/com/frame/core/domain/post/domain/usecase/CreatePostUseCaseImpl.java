@@ -7,6 +7,7 @@ import com.frame.core.domain.post.domain.entity.Post.enums.ContentType;
 import com.frame.core.domain.post.domain.repository.PostDetailRepository;
 import com.frame.core.domain.post.domain.repository.PostRepository;
 import com.frame.core.domain.user.domain.entity.enums.FavoriteType;
+import com.frame.core.global.exceptions.BadRequestException;
 import com.frame.core.global.exceptions.NotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
@@ -47,7 +48,7 @@ public class CreatePostUseCaseImpl implements CreatePostUseCase {
     private AccessType generateAccessType(String accessType) {
         if (accessType.equals("PRIVATE")) return AccessType.PRIVATE;
         if (accessType.equals("PUBLIC")) return AccessType.PUBLIC;
-        throw new NotFoundException(); // TODO BAD REQUEST EXCEPTION
+        throw new BadRequestException();
     }
 
     private ContentType generateContentType(String contentType) {
@@ -55,6 +56,6 @@ public class CreatePostUseCaseImpl implements CreatePostUseCase {
         if (contentType.equals("LIFE")) return ContentType.LIFE;
         if (contentType.equals("PHILOSOPHY")) return ContentType.PHILOSOPHY;
         if (contentType.equals("ROMANCE")) return ContentType.ROMANCE;
-        throw new NotFoundException(); // TODO BAD REQ EXCEPTION
+        throw new BadRequestException();
     }
 }
