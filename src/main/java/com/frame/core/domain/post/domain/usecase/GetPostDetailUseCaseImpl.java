@@ -12,7 +12,7 @@ import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
-public class GetDetailPostUseCaseImpl implements GetDetailPostUseCase {
+public class GetPostDetailUseCaseImpl implements GetPostDetailUseCase {
     private final PostRepository postRepository;
 
     @Override
