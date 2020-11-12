@@ -20,7 +20,7 @@ public class PostServiceImpl implements PostService {
     private final CommentUseCase commentUseCase;
     private final SympathizeUseCase sympathizeUseCase;
     private final GetPostsUseCase getPostsUseCase;
-    private final GetDetailPostUseCase getDetailPostUseCase;
+    private final GetPostDetailUseCase getPostDetailUseCase;
     private final GetCommentsUseCase getCommentsUseCase;
     private final GetHeartsUseCase getHeartsUseCase;
 
@@ -68,8 +68,8 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public GetDetailPostResponse getDetailPost(Long postId) {
-        Post post = getDetailPostUseCase.execute(authenticationFacade.getEmail(), postId);
+    public GetDetailPostResponse getPostDetail(Long postId) {
+        Post post = getPostDetailUseCase.execute(authenticationFacade.getEmail(), postId);
         return GetDetailPostResponse.builder()
                 .postId(postId)
                 .writer(post.getWriter())
