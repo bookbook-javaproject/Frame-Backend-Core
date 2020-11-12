@@ -31,8 +31,8 @@ public class PostController {
     }
 
     @GetMapping("/detail")
-    public GetDetailPostResponse getPost(@RequestParam Long postId) {
-        return postService.getPost(postId);
+    public GetDetailPostResponse getDetailPost(@RequestParam Long postId) {
+        return postService.getDetailPost(postId);
     }
 
     @PostMapping("/comment")
