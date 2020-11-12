@@ -68,9 +68,9 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public GetDetailPostResponse getPostDetail(Long postId) {
+    public GetPostDetailResponse getPostDetail(Long postId) {
         Post post = getPostDetailUseCase.execute(authenticationFacade.getEmail(), postId);
-        return GetDetailPostResponse.builder()
+        return GetPostDetailResponse.builder()
                 .postId(postId)
                 .writer(post.getWriter())
                 .content(post.getContent())
