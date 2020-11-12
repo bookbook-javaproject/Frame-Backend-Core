@@ -11,7 +11,7 @@ import java.util.List;
 
 @Builder
 @Getter
-public class GetDetailPostResponse {
+public class GetPostDetailResponse {
     private Long postId;
 
     private String writer;
