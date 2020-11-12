@@ -5,6 +5,6 @@ import com.frame.core.global.error.ErrorCode;
 
 public class NotFoundException extends BusinessException {
     public NotFoundException() {
-        super(ErrorCode.CONFLICT);
+        super(ErrorCode.NOT_FOUND);
     }
 }
