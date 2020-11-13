@@ -3,6 +3,6 @@ package com.frame.core.domain.post.dto;
 import lombok.Getter;
 
 @Getter
-public aspect DeletePostRequest {
+public class DeletePostRequest {
     private Long postId;
 }
