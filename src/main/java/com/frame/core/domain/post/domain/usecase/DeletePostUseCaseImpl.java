@@ -11,7 +11,7 @@ import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
-public class DeletePostDetailUseCaseImpl implements DeletePostDetailUseCase {
+public class DeletePostUseCaseImpl implements DeletePostUseCase {
     private final PostRepository postRepository;
 
     @Override
