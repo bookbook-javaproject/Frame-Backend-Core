@@ -35,6 +35,12 @@ public class PostController {
         return postService.getPostDetail(postId);
     }
 
+    @PatchMapping
+    @ResponseStatus(HttpStatus.OK)
+    public void updatePost(@RequestBody @Valid UpdatePostRequest request) {
+        postService.updatePost(request);
+    }
+
     @PostMapping("/comment")
     @ResponseStatus(HttpStatus.CREATED)
     public void comment(@RequestBody @Valid CommentRequest request) {
