@@ -19,16 +19,13 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long postNumber;
 
-    @Setter
     @Column(name = "content", length = 1000)
     private String content;
 
-    @Setter
     @Column(name = "content_type")
     @Enumerated(EnumType.STRING)
     private ContentType contentType;
 
-    @Setter
     @Column(name = "access_type")
     @Enumerated(EnumType.STRING)
     private AccessType accessType;
@@ -38,4 +35,16 @@ public class Post {
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
+
+    public void changeContent(String newContent) {
+        this.content = newContent;
+    }
+
+    public void changeContentType(ContentType newContentType) {
+        this.contentType = newContentType;
+    }
+
+    public void changeAccessType(AccessType newAccessType) {
+        this.accessType = newAccessType;
+    }
 }
