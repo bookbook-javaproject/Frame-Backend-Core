@@ -21,6 +21,7 @@ public class PostServiceImpl implements PostService {
     private final SympathizeUseCase sympathizeUseCase;
     private final GetPostsUseCase getPostsUseCase;
     private final GetPostDetailUseCase getPostDetailUseCase;
+    private final UpdatePostUseCase updatePostUseCase;
     private final GetCommentsUseCase getCommentsUseCase;
     private final GetHeartsUseCase getHeartsUseCase;
 
@@ -78,5 +79,10 @@ public class PostServiceImpl implements PostService {
                 .hearts(getHeartsUseCase.execute(postId))
                 .comments(getCommentsUseCase.execute(postId))
                 .build();
+    }
+
+    @Override
+    public void updatePost(UpdatePostRequest request) {
+        updatePostUseCase.execute(authenticationFacade.getEmail(), request);
     }
 }
