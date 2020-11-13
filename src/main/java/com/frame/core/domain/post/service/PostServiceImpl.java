@@ -21,7 +21,7 @@ public class PostServiceImpl implements PostService {
     private final SympathizeUseCase sympathizeUseCase;
     private final GetPostsUseCase getPostsUseCase;
     private final GetPostDetailUseCase getPostDetailUseCase;
-    private final DeletePostDetailUseCase deletePostDetailUseCase;
+    private final DeletePostUseCase deletePostUseCase;
     private final GetCommentsUseCase getCommentsUseCase;
     private final GetHeartsUseCase getHeartsUseCase;
 
@@ -82,7 +82,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public void deletePostDetail(Long postId) {
-        deletePostDetailUseCase.execute(authenticationFacade.getEmail(), postId);
+    public void deletePost(DeletePostRequest request) {
+        deletePostUseCase.execute(authenticationFacade.getEmail(), request.getPostId());
     }
 }
