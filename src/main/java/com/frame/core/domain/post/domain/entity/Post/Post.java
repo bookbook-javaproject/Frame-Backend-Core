@@ -2,10 +2,7 @@ package com.frame.core.domain.post.domain.entity.Post;
 
 import com.frame.core.domain.post.domain.entity.Post.enums.AccessType;
 import com.frame.core.domain.post.domain.entity.Post.enums.ContentType;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -22,13 +19,16 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long postNumber;
 
+    @Setter
     @Column(name = "content", length = 1000)
     private String content;
 
+    @Setter
     @Column(name = "content_type")
     @Enumerated(EnumType.STRING)
     private ContentType contentType;
 
+    @Setter
     @Column(name = "access_type")
     @Enumerated(EnumType.STRING)
     private AccessType accessType;
