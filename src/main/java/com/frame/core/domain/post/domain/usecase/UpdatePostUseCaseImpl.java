@@ -29,9 +29,9 @@ public class UpdatePostUseCaseImpl implements UpdatePostUseCase {
         if (!email.equals(post.getWriter())) {
             throw new UnAuthorizedException();
         }
-        post.setContent(request.getContent());
-        post.setAccessType(generateAccessType(request.getAccessType()));
-        post.setContentType(generateContentType(request.getContentType()));
+        post.changeContent(request.getContent());
+        post.changeAccessType(generateAccessType(request.getAccessType()));
+        post.changeContentType(generateContentType(request.getContentType()));
 
         postRepository.save(post);
     }
