@@ -83,6 +83,12 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public void updatePost(UpdatePostRequest request) {
-        updatePostUseCase.execute(authenticationFacade.getEmail(), request);
+        updatePostUseCase.execute(
+                authenticationFacade.getEmail(),
+                request.getPostId(),
+                request.getContent(),
+                request.getAccessType(),
+                request.getContentType()
+        );
     }
 }
