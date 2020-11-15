@@ -2,10 +2,7 @@ package com.frame.core.domain.post.domain.entity.Post;
 
 import com.frame.core.domain.post.domain.entity.Post.enums.AccessType;
 import com.frame.core.domain.post.domain.entity.Post.enums.ContentType;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -38,4 +35,16 @@ public class Post {
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
+
+    public void changeContent(String newContent) {
+        this.content = newContent;
+    }
+
+    public void changeContentType(ContentType newContentType) {
+        this.contentType = newContentType;
+    }
+
+    public void changeAccessType(AccessType newAccessType) {
+        this.accessType = newAccessType;
+    }
 }

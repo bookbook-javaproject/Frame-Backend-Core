@@ -35,6 +35,12 @@ public class PostController {
         return postService.getPostDetail(postId);
     }
 
+    @PatchMapping
+    @ResponseStatus(HttpStatus.OK)
+    public void updatePost(@RequestBody @Valid UpdatePostRequest request) {
+        postService.updatePost(request);
+    }
+  
     @DeleteMapping
     @ResponseStatus(HttpStatus.OK)
     public void deletePost(@RequestBody @Valid DeletePostRequest request) {
