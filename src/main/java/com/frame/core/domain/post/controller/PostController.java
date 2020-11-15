@@ -37,7 +37,7 @@ public class PostController {
 
     @DeleteMapping
     @ResponseStatus(HttpStatus.OK)
-    public void deletePostDetail(@RequestBody @Valid DeletePostRequest request) {
+    public void deletePost(@RequestBody @Valid DeletePostRequest request) {
         postService.deletePost(request);
     }
 
