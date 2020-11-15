@@ -4,8 +4,6 @@ import com.frame.core.domain.post.domain.entity.Post.Post;
 import com.frame.core.domain.post.domain.entity.Post.enums.AccessType;
 import com.frame.core.domain.post.domain.entity.Post.enums.ContentType;
 import com.frame.core.domain.post.domain.repository.PostRepository;
-import com.frame.core.domain.post.dto.CreatePostRequest;
-import com.frame.core.domain.post.dto.UpdatePostRequest;
 import com.frame.core.domain.user.domain.exception.UnAuthorizedException;
 import com.frame.core.global.exceptions.BadRequestException;
 import com.frame.core.global.exceptions.NotFoundException;
@@ -20,8 +18,8 @@ public class UpdatePostUseCaseImpl implements UpdatePostUseCase {
     private final PostRepository postRepository;
 
     @Override
-    public void execute(String email, UpdatePostRequest request) {
-        Optional<Post> optionalPost = postRepository.findById(request.getPostId());
+    public void execute(String email, Long postId, String content, String accessType, String contentType) {
+        Optional<Post> optionalPost = postRepository.findById(postId);
         if (!optionalPost.isPresent()) {
             throw new NotFoundException();
         }
@@ -29,9 +27,9 @@ public class UpdatePostUseCaseImpl implements UpdatePostUseCase {
         if (!email.equals(post.getWriter())) {
             throw new UnAuthorizedException();
         }
-        post.changeContent(request.getContent());
-        post.changeAccessType(generateAccessType(request.getAccessType()));
-        post.changeContentType(generateContentType(request.getContentType()));
+        post.changeContent(content);
+        post.changeAccessType(generateAccessType(accessType));
+        post.changeContentType(generateContentType(contentType));
 
         postRepository.save(post);
     }
