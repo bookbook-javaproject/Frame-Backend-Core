@@ -14,4 +14,6 @@ public interface PostService {
     public GetPostDetailResponse getPostDetail(Long postId);
 
     public void updatePost(UpdatePostRequest request);
+
+    public void deletePost(DeletePostRequest request);
 }
