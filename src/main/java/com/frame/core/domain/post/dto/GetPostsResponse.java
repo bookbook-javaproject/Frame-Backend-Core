@@ -7,6 +7,6 @@ import java.util.List;
 
 @Builder
 @Getter
-public class GetPostResponse {
+public class GetPostsResponse {
     private List<PostPreview> posts;
 }
