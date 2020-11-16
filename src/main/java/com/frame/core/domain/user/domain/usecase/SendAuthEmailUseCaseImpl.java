@@ -3,6 +3,7 @@ package com.frame.core.domain.user.domain.usecase;
 
 import com.frame.core.domain.user.domain.entity.EmailAuth;
 import com.frame.core.domain.user.domain.repository.EmailAuthRepository;
+import com.frame.core.domain.user.domain.service.PasswordService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
@@ -16,6 +17,7 @@ import java.util.UUID;
 public class SendAuthEmailUseCaseImpl implements SendAuthEmailUseCase {
     private final EmailAuthRepository emailAuthRepository;
     private final JavaMailSender mailSender;
+    private final PasswordService passwordService;
 
     @Value("${spring.mail.username}")
     private String FROM_ADDRESS;
@@ -23,7 +25,23 @@ public class SendAuthEmailUseCaseImpl implements SendAuthEmailUseCase {
     @Override
     public void execute(String email) {
         String code = UUID.randomUUID().toString();
-        emailAuthRepository.save(new EmailAuth(email, code));
+        emailAuthRepository.save(
+                EmailAuth.builder()
+                    .email(email)
+                    .authCode(code)
+                    .build());
+        mailSender.send(generateEmail(email, code));
+    }
+
+    @Override
+    public void execute(String email, String nickName, String password) {
+        String code = UUID.randomUUID().toString();
+        emailAuthRepository.save(EmailAuth.builder()
+                .email(email)
+                .authCode(code)
+                .nickName(nickName)
+                .password(passwordService.encode(password))
+                .build());
         mailSender.send(generateEmail(email, code));
     }
 
