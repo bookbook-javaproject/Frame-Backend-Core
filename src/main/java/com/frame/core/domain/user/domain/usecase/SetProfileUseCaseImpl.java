@@ -2,6 +2,7 @@ package com.frame.core.domain.user.domain.usecase;
 
 import com.frame.core.domain.user.domain.entity.enums.FavoriteType;
 import com.frame.core.domain.user.domain.repository.UserRepository;
+import com.frame.core.global.exceptions.BadRequestException;
 import com.frame.core.global.exceptions.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -28,6 +29,6 @@ public class SetProfileUseCaseImpl implements SetProfileUseCase {
         if (favoriteType.equals("LIFE")) return FavoriteType.LIFE;
         if (favoriteType.equals("PHILOSOPHY")) return FavoriteType.PHILOSOPHY;
         if (favoriteType.equals("ROMANCE")) return FavoriteType.ROMANCE;
-        throw new NotFoundException(); // TODO EXCEPtION OF BAD REQUEST
+        throw new BadRequestException();
     }
 }
