@@ -1,48 +1,37 @@
 package com.frame.core.domain.post.domain.usecase;
 
 import com.frame.core.domain.post.domain.entity.Post.Post;
-import com.frame.core.domain.post.domain.entity.Post.PostDetail;
 import com.frame.core.domain.post.domain.entity.Post.enums.AccessType;
 import com.frame.core.domain.post.domain.entity.Post.enums.ContentType;
-import com.frame.core.domain.post.domain.repository.PostDetailRepository;
 import com.frame.core.domain.post.domain.repository.PostRepository;
-import com.frame.core.domain.user.domain.entity.enums.FavoriteType;
+import com.frame.core.domain.user.domain.exception.UnAuthorizedException;
 import com.frame.core.global.exceptions.BadRequestException;
 import com.frame.core.global.exceptions.NotFoundException;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
-import java.util.Collections;
-
+import java.util.Optional;
 
 @Component
-@AllArgsConstructor
-public class CreatePostUseCaseImpl implements CreatePostUseCase {
+@RequiredArgsConstructor
+public class UpdatePostUseCaseImpl implements UpdatePostUseCase {
     private final PostRepository postRepository;
 
-    private final PostDetailRepository postDetailRepository;
-
     @Override
-    public void execute(String writer, String content, String contentType, String accessType) {
-        Post post = Post.builder()
-                .content(content)
-                .accessType(generateAccessType(accessType))
-                .contentType(generateContentType(contentType))
-                .createdAt(LocalDateTime.now())
-                .writer(writer)
-                .build();
+    public void execute(String email, Long postId, String content, String accessType, String contentType) {
+        Optional<Post> optionalPost = postRepository.findById(postId);
+        if (!optionalPost.isPresent()) {
+            throw new NotFoundException();
+        }
+        Post post = optionalPost.get();
+        if (!email.equals(post.getWriter())) {
+            throw new UnAuthorizedException();
+        }
+        post.changeContent(content);
+        post.changeAccessType(generateAccessType(accessType));
+        post.changeContentType(generateContentType(contentType));
 
         postRepository.save(post);
-
-        postDetailRepository.save(
-                PostDetail.builder()
-                .postNumber(post.getPostNumber())
-                .comments(Collections.emptyList())
-                .hearts(Collections.emptyList())
-                .build()
-        );
     }
 
     private AccessType generateAccessType(String accessType) {

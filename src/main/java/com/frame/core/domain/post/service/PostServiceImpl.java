@@ -1,14 +1,14 @@
 package com.frame.core.domain.post.service;
 
-import com.frame.core.domain.post.domain.usecase.CommentUseCase;
-import com.frame.core.domain.post.domain.usecase.CreatePostUseCase;
-import com.frame.core.domain.post.domain.usecase.SympathizeUseCase;
-import com.frame.core.domain.post.dto.CommentRequest;
-import com.frame.core.domain.post.dto.CreatePostRequest;
-import com.frame.core.domain.post.dto.SympathizeRequest;
+import com.frame.core.domain.post.domain.entity.Post.Post;
+import com.frame.core.domain.post.domain.usecase.*;
+import com.frame.core.domain.post.dto.*;
 import com.frame.core.infra.springBoot.security.AuthenticationFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Service
@@ -19,6 +19,14 @@ public class PostServiceImpl implements PostService {
     private final CreatePostUseCase createPostUseCase;
     private final CommentUseCase commentUseCase;
     private final SympathizeUseCase sympathizeUseCase;
+    private final GetPostsUseCase getPostsUseCase;
+    private final GetPostDetailUseCase getPostDetailUseCase;
+    private final UpdatePostUseCase updatePostUseCase;
+    private final DeletePostUseCase deletePostUseCase;
+    private final GetCommentsUseCase getCommentsUseCase;
+    private final GetHeartsUseCase getHeartsUseCase;
+    private final GetUserPostUseCase getUserPostUseCase;
+    private final GetSympatheticPostsUseCase getSympatheticPostsUseCase;
 
     @Override
     public void createPost(CreatePostRequest request) {
@@ -45,5 +53,81 @@ public class PostServiceImpl implements PostService {
                 authenticationFacade.getEmail(),
                 request.getPostId()
         );
+    }
+
+    @Override
+    public GetPostsResponse getPosts(String sortType) {
+        List<PostPreview> postPreviews = new ArrayList<PostPreview>();
+        for (Post post : getPostsUseCase.execute(sortType)) {
+            postPreviews.add(PostPreview.builder()
+            .postId(post.getPostNumber())
+            .content(post.getContent())
+            .comments((long) getCommentsUseCase.execute(post.getPostNumber()).size())
+            .hearts((long) getHeartsUseCase.execute(post.getPostNumber()).size())
+            .writerEmail(post.getWriter())
+            .createdAt(post.getCreatedAt())
+            .build());
+        }
+        return GetPostsResponse.builder().posts(postPreviews).build();
+    }
+
+    @Override
+    public GetUserPostsResponse getUserPosts(String accessType) {
+        List<UserPostPreview> userPostPreviews = new ArrayList<UserPostPreview>();
+        for (Post post: getUserPostUseCase.execute(
+                authenticationFacade.getEmail(), accessType)) {
+            userPostPreviews.add(UserPostPreview.builder()
+                    .postId(post.getPostNumber())
+                    .content(post.getContent())
+                    .writer(post.getWriter())
+                    .createdAt(post.getCreatedAt())
+                    .build());
+        }
+        return GetUserPostsResponse.builder().userPostPreviews(userPostPreviews).build();
+    }
+
+    @Override
+    public GetSympatheticPostsResponse getSympatheticPosts() {
+        List<PostPreview> postPreviews = new ArrayList<PostPreview>();
+        for (Post post : getSympatheticPostsUseCase.execute(authenticationFacade.getEmail())) {
+            postPreviews.add(PostPreview.builder()
+                    .postId(post.getPostNumber())
+                    .content(post.getContent())
+                    .comments((long) getCommentsUseCase.execute(post.getPostNumber()).size())
+                    .hearts((long) getHeartsUseCase.execute(post.getPostNumber()).size())
+                    .writerEmail(post.getWriter())
+                    .createdAt(post.getCreatedAt())
+                    .build());
+        }
+        return GetSympatheticPostsResponse.builder().posts(postPreviews).build();
+    }
+
+    @Override
+    public GetPostDetailResponse getPostDetail(Long postId) {
+        Post post = getPostDetailUseCase.execute(authenticationFacade.getEmail(), postId);
+        return GetPostDetailResponse.builder()
+                .postId(postId)
+                .writer(post.getWriter())
+                .content(post.getContent())
+                .createdAt(post.getCreatedAt())
+                .hearts(getHeartsUseCase.execute(postId))
+                .comments(getCommentsUseCase.execute(postId))
+                .build();
+    }
+
+    @Override
+    public void updatePost(UpdatePostRequest request) {
+        updatePostUseCase.execute(
+                authenticationFacade.getEmail(),
+                request.getPostId(),
+                request.getContent(),
+                request.getAccessType(),
+                request.getContentType()
+        );
+    }
+  
+    @Override
+    public void deletePost(DeletePostRequest request) {
+        deletePostUseCase.execute(authenticationFacade.getEmail(), request.getPostId());
     }
 }

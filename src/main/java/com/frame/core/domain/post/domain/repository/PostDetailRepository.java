@@ -4,4 +4,5 @@ import com.frame.core.domain.post.domain.entity.Post.PostDetail;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 public interface PostDetailRepository extends MongoRepository<PostDetail, Long> {
+    public PostDetail findTop10ByOrderByHearts();
 }

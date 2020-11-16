@@ -1,9 +1,6 @@
 package com.frame.core.domain.post.controller;
 
-import com.frame.core.domain.post.domain.usecase.SympathizeUseCase;
-import com.frame.core.domain.post.dto.CommentRequest;
-import com.frame.core.domain.post.dto.CreatePostRequest;
-import com.frame.core.domain.post.dto.SympathizeRequest;
+import com.frame.core.domain.post.dto.*;
 import com.frame.core.domain.post.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -23,17 +20,45 @@ public class PostController {
         postService.createPost(request);
     }
 
-    public void getPosts() {
-
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    public GetPostsResponse getPosts(@RequestParam("sort-type") String sortType) {
+        return postService.getPosts(sortType);
     }
 
-    public void getUserPosts() {
+    @GetMapping("/my")
+    @ResponseStatus(HttpStatus.OK)
+    public GetUserPostsResponse getUserPosts(@RequestParam("access-type") String accessType) {
+        return postService.getUserPosts(accessType);
+    }
 
+    @GetMapping("/my/sympathetic")
+    @ResponseStatus(HttpStatus.OK)
+    public GetSympatheticPostsResponse getSympatheticPosts() {
+        return postService.getSympatheticPosts();
+    }
+
+    @GetMapping("/top")
+    @ResponseStatus(HttpStatus.OK)
+    public void getTopPost() {
+        // TODO
     }
 
     @GetMapping("/detail")
-    public void getPost() {
+    public GetPostDetailResponse getPostDetail(@RequestParam("post-id") Long postId) {
+        return postService.getPostDetail(postId);
+    }
 
+    @PatchMapping
+    @ResponseStatus(HttpStatus.OK)
+    public void updatePost(@RequestBody @Valid UpdatePostRequest request) {
+        postService.updatePost(request);
+    }
+  
+    @DeleteMapping
+    @ResponseStatus(HttpStatus.OK)
+    public void deletePost(@RequestBody @Valid DeletePostRequest request) {
+        postService.deletePost(request);
     }
 
     @PostMapping("/comment")
