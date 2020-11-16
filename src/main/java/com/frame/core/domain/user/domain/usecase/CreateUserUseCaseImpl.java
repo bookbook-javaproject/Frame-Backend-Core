@@ -8,7 +8,6 @@ import com.frame.core.domain.user.domain.repository.UserRepository;
 import com.frame.core.domain.user.domain.service.PasswordService;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
-import com.sun.tools.javac.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
