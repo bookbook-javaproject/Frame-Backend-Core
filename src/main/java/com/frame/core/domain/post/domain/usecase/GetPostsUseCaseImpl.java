@@ -2,6 +2,7 @@ package com.frame.core.domain.post.domain.usecase;
 
 import com.frame.core.domain.post.domain.entity.Post.Post;
 import com.frame.core.domain.post.domain.entity.Post.PostDetail;
+import com.frame.core.domain.post.domain.entity.Post.enums.AccessType;
 import com.frame.core.domain.post.domain.repository.PostDetailRepository;
 import com.frame.core.domain.post.domain.repository.PostRepository;
 import com.frame.core.global.exceptions.BadRequestException;
@@ -23,7 +24,7 @@ public class GetPostsUseCaseImpl implements GetPostsUseCase {
     @Override
     public Iterable<Post> execute(String sortType) {
         if (sortType.equals("recency")) {
-            return postRepository.findAllByAccessType("PUBLIC");
+            return postRepository.findAllByAccessType(AccessType.PUBLIC);
 
 //            for (Post post: allPosts) {
 //                postDetailRepository.findById(post.getPostNumber()).ifPresent(
