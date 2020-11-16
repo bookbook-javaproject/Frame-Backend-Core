@@ -1,5 +1,6 @@
 package com.frame.core.domain.user.service;
 
+import com.frame.core.domain.user.domain.entity.EmailAuth;
 import com.frame.core.domain.user.domain.entity.User;
 import com.frame.core.domain.user.domain.usecase.*;
 import com.frame.core.domain.user.dto.*;
@@ -38,8 +39,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void registerService(RegisterRequest request) {
-        createUserUseCase.execute(request.getEmail(), request.getNickname(), request.getPassword());
-        sendAuthEmailUseCase.execute(request.getEmail());
+        sendAuthEmailUseCase.execute(request.getEmail(), request.getNickname(), request.getPassword());
     }
 
     @Override
@@ -91,12 +91,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void getAuthCode(GetAuthCodeRequest request) {
+    public void getAuthCodeForChangePassword(GetAuthCodeRequest request) {
         sendAuthEmailUseCase.execute(request.getEmail());
     }
 
     @Override
     public void certifyAuthCode(String authCode) {
-        certifyAuthCodeUseCase.execute(authCode);
+        EmailAuth emailAuth = certifyAuthCodeUseCase.execute(authCode);
+        createUserUseCase.execute(
+                emailAuth.getEmail(),
+                emailAuth.getNickName(),
+                emailAuth.getPassword());
     }
 }

@@ -19,7 +19,7 @@ public interface UserService {
 
     public GetRelationNumberResponse getRelationNumber(String email);
 
-    public void getAuthCode(GetAuthCodeRequest request);
+    public void getAuthCodeForChangePassword(GetAuthCodeRequest request);
 
     public void certifyAuthCode(String authCode);
 }
