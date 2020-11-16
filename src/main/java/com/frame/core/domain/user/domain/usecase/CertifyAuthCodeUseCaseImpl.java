@@ -1,8 +1,10 @@
 package com.frame.core.domain.user.domain.usecase;
 
 
+import com.frame.core.domain.user.domain.entity.EmailAuth;
 import com.frame.core.domain.user.domain.repository.EmailAuthRepository;
 import com.frame.core.domain.user.domain.repository.UserRepository;
+import com.frame.core.global.exceptions.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -13,17 +15,10 @@ public class CertifyAuthCodeUseCaseImpl implements CertifyAuthCodeUseCase {
     private final UserRepository userRepository;
 
     @Override
-    public void execute(String authCode) {
-        emailAuthRepository.findByAuthCode(authCode).ifPresent(
-            emailAuth -> {
-                userRepository.findById(emailAuth.getEmail()).ifPresent(
-                        user -> {
-                            user.certifyUser();
-                            userRepository.save(user);
-                        }
-                );
-                emailAuthRepository.delete(emailAuth);
-            }
-        );
+    public EmailAuth execute(String authCode) {
+        EmailAuth emailAuth = emailAuthRepository.findByAuthCode(authCode)
+                .orElseThrow(NotFoundException::new);
+        emailAuthRepository.delete(emailAuth);
+        return emailAuth;
     }
 }
