@@ -5,7 +5,9 @@ import lombok.Getter;
 import javax.validation.constraints.NotEmpty;
 
 @Getter
-public class CreatePostRequest {
+public class UpdatePostRequest {
+    private Long postId;
+
     @NotEmpty
     private String content;
 
