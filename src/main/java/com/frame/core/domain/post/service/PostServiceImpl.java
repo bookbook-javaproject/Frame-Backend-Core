@@ -23,6 +23,8 @@ public class PostServiceImpl implements PostService {
     private final GetPostDetailUseCase getPostDetailUseCase;
     private final GetCommentsUseCase getCommentsUseCase;
     private final GetHeartsUseCase getHeartsUseCase;
+    private final GetUserPostUseCase getUserPostUseCase;
+    private final GetSympatheticPostsUseCase getSympatheticPostsUseCase;
 
     @Override
     public void createPost(CreatePostRequest request) {
@@ -52,9 +54,9 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public GetPostResponse getPosts(GetPostRequest request) {
+    public GetPostsResponse getPosts(String sortType) {
         List<PostPreview> postPreviews = new ArrayList<PostPreview>();
-        for (Post post : getPostsUseCase.execute(request.getSortType())) {
+        for (Post post : getPostsUseCase.execute(sortType)) {
             postPreviews.add(PostPreview.builder()
             .postId(post.getPostNumber())
             .content(post.getContent())
@@ -64,7 +66,38 @@ public class PostServiceImpl implements PostService {
             .createdAt(post.getCreatedAt())
             .build());
         }
-        return GetPostResponse.builder().posts(postPreviews).build();
+        return GetPostsResponse.builder().posts(postPreviews).build();
+    }
+
+    @Override
+    public GetUserPostsResponse getUserPosts(String accessType) {
+        List<UserPostPreview> userPostPreviews = new ArrayList<UserPostPreview>();
+        for (Post post: getUserPostUseCase.execute(
+                authenticationFacade.getEmail(), accessType)) {
+            userPostPreviews.add(UserPostPreview.builder()
+                    .postId(post.getPostNumber())
+                    .content(post.getContent())
+                    .writer(post.getWriter())
+                    .createdAt(post.getCreatedAt())
+                    .build());
+        }
+        return GetUserPostsResponse.builder().userPostPreviews(userPostPreviews).build();
+    }
+
+    @Override
+    public GetSympatheticPostsResponse getSympatheticPosts() {
+        List<PostPreview> postPreviews = new ArrayList<PostPreview>();
+        for (Post post : getSympatheticPostsUseCase.execute(authenticationFacade.getEmail())) {
+            postPreviews.add(PostPreview.builder()
+                    .postId(post.getPostNumber())
+                    .content(post.getContent())
+                    .comments((long) getCommentsUseCase.execute(post.getPostNumber()).size())
+                    .hearts((long) getHeartsUseCase.execute(post.getPostNumber()).size())
+                    .writerEmail(post.getWriter())
+                    .createdAt(post.getCreatedAt())
+                    .build());
+        }
+        return GetSympatheticPostsResponse.builder().posts(postPreviews).build();
     }
 
     @Override
