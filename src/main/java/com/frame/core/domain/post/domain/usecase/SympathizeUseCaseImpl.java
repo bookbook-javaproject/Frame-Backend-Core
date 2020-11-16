@@ -19,6 +19,7 @@ public class SympathizeUseCaseImpl implements SympathizeUseCase {
                     } else {
                         postDetail.getHearts().add(email);
                     }
+                    postDetailRepository.save(postDetail);
                 }
         );
     }
