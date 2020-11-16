@@ -1,6 +1,7 @@
 package com.frame.core.domain.user.domain.entity;
 
 import com.frame.core.domain.user.domain.entity.enums.FavoriteType;
+import com.frame.core.domain.user.domain.entity.enums.UserType;
 import lombok.*;
 
 import javax.persistence.*;
@@ -29,6 +30,9 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     private FavoriteType favoriteType;
+
+    @Enumerated(EnumType.STRING)
+    private UserType userType;
 
     @Column(name = "image_uri", nullable = true)
     private String imageUri;
