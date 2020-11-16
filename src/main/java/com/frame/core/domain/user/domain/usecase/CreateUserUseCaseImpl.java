@@ -19,8 +19,6 @@ public class CreateUserUseCaseImpl implements CreateUserUseCase {
     private final UserRepository userRepository;
     private final RelationshipRepository relationshipRepository;
 
-    private final PasswordService passwordService;
-
     @Override
     public void execute(String email, String nickname, String password) {
         userRepository.findById(email).ifPresent(
@@ -31,7 +29,7 @@ public class CreateUserUseCaseImpl implements CreateUserUseCase {
                 User.builder()
                 .email(email)
                 .nickname(nickname)
-                .password(passwordService.encode(password))
+                .password(password)
                 .build()
         );
 
