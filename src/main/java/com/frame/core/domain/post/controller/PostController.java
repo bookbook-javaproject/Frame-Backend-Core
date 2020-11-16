@@ -22,16 +22,30 @@ public class PostController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public GetPostResponse getPosts(@RequestBody @Valid GetPostRequest request) {
-        return postService.getPosts(request);
+    public GetPostsResponse getPosts(@RequestParam("sort-type") String sortType) {
+        return postService.getPosts(sortType);
     }
 
-    public void getUserPosts() {
+    @GetMapping("/my")
+    @ResponseStatus(HttpStatus.OK)
+    public GetUserPostsResponse getUserPosts(@RequestParam("access-type") String accessType) {
+        return postService.getUserPosts(accessType);
+    }
 
+    @GetMapping("/my/sympathetic")
+    @ResponseStatus(HttpStatus.OK)
+    public GetSympatheticPostsResponse getSympatheticPosts() {
+        return postService.getSympatheticPosts();
+    }
+
+    @GetMapping("/top")
+    @ResponseStatus(HttpStatus.OK)
+    public void getTopPost() {
+        // TODO
     }
 
     @GetMapping("/detail")
-    public GetPostDetailResponse getPostDetail(@RequestParam Long postId) {
+    public GetPostDetailResponse getPostDetail(@RequestParam("post-id") Long postId) {
         return postService.getPostDetail(postId);
     }
 

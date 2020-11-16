@@ -9,7 +9,11 @@ public interface PostService {
 
     public void sympathize(SympathizeRequest request);
 
-    public GetPostResponse getPosts(GetPostRequest request);
+    public GetPostsResponse getPosts(String sortType);
+
+    public GetUserPostsResponse getUserPosts(String accessType);
+
+    public GetSympatheticPostsResponse getSympatheticPosts();
 
     public GetPostDetailResponse getPostDetail(Long postId);
 

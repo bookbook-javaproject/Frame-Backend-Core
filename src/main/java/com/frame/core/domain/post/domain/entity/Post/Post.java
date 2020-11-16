@@ -2,7 +2,10 @@ package com.frame.core.domain.post.domain.entity.Post;
 
 import com.frame.core.domain.post.domain.entity.Post.enums.AccessType;
 import com.frame.core.domain.post.domain.entity.Post.enums.ContentType;
+
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -34,8 +37,12 @@ public class Post {
     private String writer;
 
     @Column(name = "created_at")
+    @CreatedDate
     private LocalDateTime createdAt;
 
+    @Column(name = "updated_at")
+    @LastModifiedDate
+    private LocalDateTime updatedAt;
     public void changeContent(String newContent) {
         this.content = newContent;
     }

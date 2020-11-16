@@ -7,6 +7,6 @@ import java.util.List;
 
 @Builder
 @Getter
-public class GetPostResponse {
+public class GetSympatheticPostsResponse {
     private List<PostPreview> posts;
 }
