@@ -41,7 +41,7 @@ public class UserController {
 
     @PostMapping("/password/auth-code")
     @ResponseStatus(value = HttpStatus.OK)
-    public void sendAuthCode(@RequestBody @Valid GetAuthCodeRequest request) { userService.getAuthCode(request); }
+    public void sendAuthCode(@RequestBody @Valid GetAuthCodeRequest request) { userService.getAuthCodeForChangePassword(request); }
 
     @PatchMapping("/password")
     @ResponseStatus(value = HttpStatus.OK)
