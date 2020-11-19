@@ -5,7 +5,9 @@ import com.frame.core.domain.submission.domain.repository.AuthorSubmissionAuthRe
 import com.frame.core.domain.user.domain.entity.EmailAuth;
 import com.frame.core.global.exceptions.NotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
+@Component
 @RequiredArgsConstructor
 public class CertifyEmailUseCaseImpl implements CertifyEmailUseCase {
     private final AuthorSubmissionAuthRepository authorSubmissionAuthRepository;
