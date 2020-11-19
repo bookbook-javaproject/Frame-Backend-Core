@@ -29,6 +29,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements W
                 .antMatchers( "/user/auth").permitAll()
                 .antMatchers( "/user/password/auth-code").permitAll()
                 .antMatchers(HttpMethod.PATCH,"/user/password").permitAll()
+                .antMatchers(HttpMethod.GET, "/submission").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .apply(new JwtConfigure(jwtProvider));
