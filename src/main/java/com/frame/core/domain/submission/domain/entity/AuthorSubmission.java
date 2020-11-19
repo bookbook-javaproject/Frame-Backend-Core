@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Getter
@@ -17,7 +18,7 @@ import javax.persistence.Table;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AuthorSubmission {
-    @Column(name = "email")
+    @Id
     private String email;
 
     @Column(name = "link")
