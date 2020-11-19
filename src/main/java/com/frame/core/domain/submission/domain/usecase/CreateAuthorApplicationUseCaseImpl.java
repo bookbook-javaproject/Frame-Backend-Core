@@ -15,10 +15,9 @@ public class CreateAuthorApplicationUseCaseImpl implements CreateAuthorApplicati
 
     @Override
     public void execute(String email, String link, String goal) {
-        authorSubmissionAuthRepository.findByEmail(email).ifPresent(
+        authorSubmissionAuthRepository.findById(email).ifPresent(
                 auth -> {
                     if (auth.getCertification().equals(false)) throw new UnAuthorizedException();
-
                     authorSubmissionRepository.save(
                             AuthorSubmission.builder()
                             .email(email)
