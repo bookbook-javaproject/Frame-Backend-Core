@@ -38,10 +38,10 @@ public class PostController {
         return postService.getSympatheticPosts();
     }
 
-    @GetMapping("/top")
+    @GetMapping("/highlight")
     @ResponseStatus(HttpStatus.OK)
-    public void getTopPost() {
-        // TODO
+    public GetPostsResponse getHighLightPost() {
+        return postService.getHighlightPost();
     }
 
     @GetMapping("/detail")
