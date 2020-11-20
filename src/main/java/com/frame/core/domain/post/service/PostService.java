@@ -20,4 +20,6 @@ public interface PostService {
     public void updatePost(UpdatePostRequest request);
 
     public void deletePost(DeletePostRequest request);
+
+    public GetPostsResponse getHighlightPost();
 }

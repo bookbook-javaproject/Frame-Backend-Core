@@ -27,6 +27,8 @@ public class PostServiceImpl implements PostService {
     private final GetHeartsUseCase getHeartsUseCase;
     private final GetUserPostUseCase getUserPostUseCase;
     private final GetSympatheticPostsUseCase getSympatheticPostsUseCase;
+    private final GetTopPostUseCase getTopPostUseCase;
+    private final GetPostPreviewUseCase getPostPreviewUseCase;
 
     @Override
     public void createPost(CreatePostRequest request) {
@@ -129,5 +131,22 @@ public class PostServiceImpl implements PostService {
     @Override
     public void deletePost(DeletePostRequest request) {
         deletePostUseCase.execute(authenticationFacade.getEmail(), request.getPostId());
+    }
+
+    @Override
+    public GetPostsResponse getHighlightPost() {
+        List<PostPreview> postPreviews = new ArrayList<PostPreview>();
+        for (Long postId: getTopPostUseCase.execute()) {
+            Post post = getPostPreviewUseCase.execute(postId);
+            postPreviews.add(PostPreview.builder()
+            .writerEmail(post.getWriter())
+            .hearts((long) getHeartsUseCase.execute(postId).size())
+            .comments((long) getCommentsUseCase.execute(postId).size())
+            .content(post.getContent())
+            .postId(post.getPostNumber())
+            .createdAt(post.getCreatedAt())
+            .build());
+        }
+        return GetPostsResponse.builder().posts(postPreviews).build();
     }
 }
