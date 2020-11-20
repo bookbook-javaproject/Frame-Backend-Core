@@ -29,6 +29,7 @@ public class PostServiceImpl implements PostService {
     private final GetSympatheticPostsUseCase getSympatheticPostsUseCase;
     private final GetTopPostUseCase getTopPostUseCase;
     private final GetPostPreviewUseCase getPostPreviewUseCase;
+    private final SearchPostUseCase searchPostUseCase;
 
     @Override
     public void createPost(CreatePostRequest request) {
@@ -146,6 +147,22 @@ public class PostServiceImpl implements PostService {
             .postId(post.getPostNumber())
             .createdAt(post.getCreatedAt())
             .build());
+        }
+        return GetPostsResponse.builder().posts(postPreviews).build();
+    }
+
+    @Override
+    public GetPostsResponse getPostsWithSearch(String q) {
+        List<PostPreview> postPreviews = new ArrayList<PostPreview>();
+        for (Post post: searchPostUseCase.execute(q)) {
+            postPreviews.add(PostPreview.builder()
+                    .writerEmail(post.getWriter())
+                    .hearts((long) getHeartsUseCase.execute(post.getPostNumber()).size())
+                    .comments((long) getCommentsUseCase.execute(post.getPostNumber()).size())
+                    .content(post.getContent())
+                    .postId(post.getPostNumber())
+                    .createdAt(post.getCreatedAt())
+                    .build());
         }
         return GetPostsResponse.builder().posts(postPreviews).build();
     }

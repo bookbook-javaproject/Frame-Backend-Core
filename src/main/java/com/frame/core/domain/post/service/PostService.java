@@ -22,4 +22,6 @@ public interface PostService {
     public void deletePost(DeletePostRequest request);
 
     public GetPostsResponse getHighlightPost();
+
+    public GetPostsResponse getPostsWithSearch(String q);
 }
