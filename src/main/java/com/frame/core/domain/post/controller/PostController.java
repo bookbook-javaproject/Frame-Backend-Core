@@ -26,6 +26,12 @@ public class PostController {
         return postService.getPosts(sortType);
     }
 
+    @GetMapping("/search")
+    @ResponseStatus(HttpStatus.OK)
+    public GetPostsResponse getPostsWithSearch(@RequestParam("q") String q) {
+        return postService.getPostsWithSearch(q);
+    }
+
     @GetMapping("/my")
     @ResponseStatus(HttpStatus.OK)
     public GetUserPostsResponse getUserPosts(@RequestParam("access-type") String accessType) {
