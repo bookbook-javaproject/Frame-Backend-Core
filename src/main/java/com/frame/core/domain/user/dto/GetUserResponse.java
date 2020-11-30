@@ -13,4 +13,6 @@ public class GetUserResponse {
     private String imageUri;
 
     private String description;
+
+    private String favoriteType;
 }

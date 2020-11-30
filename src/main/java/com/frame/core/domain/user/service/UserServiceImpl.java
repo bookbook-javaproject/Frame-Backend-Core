@@ -31,6 +31,7 @@ public class UserServiceImpl implements UserService {
         User user = getUserUseCase.execute(authenticationFacade.getEmail());
         return GetUserResponse.builder()
                 .email(user.getEmail())
+                .favoriteType(user.getFavoriteType().toString())
                 .nickname(user.getNickname())
                 .imageUri(user.getImageUri())
                 .description(user.getDescription())
