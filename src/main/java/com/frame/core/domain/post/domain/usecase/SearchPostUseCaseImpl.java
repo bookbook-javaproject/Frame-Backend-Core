@@ -13,6 +13,6 @@ public class SearchPostUseCaseImpl implements SearchPostUseCase {
 
     @Override
     public Iterable<Post> execute(String q) {
-        return postRepository.findAllByContentLikeAndAccessType(q, AccessType.PUBLIC);
+        return postRepository.findAllByContentIsContainingAndAccessType(q, AccessType.PUBLIC);
     }
 }
