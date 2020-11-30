@@ -3,6 +3,8 @@ package com.frame.core.domain.post.service;
 import com.frame.core.domain.post.domain.entity.Post.Post;
 import com.frame.core.domain.post.domain.usecase.*;
 import com.frame.core.domain.post.dto.*;
+import com.frame.core.domain.user.domain.entity.User;
+import com.frame.core.domain.user.domain.usecase.GetUserUseCase;
 import com.frame.core.infra.springBoot.security.AuthenticationFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -30,6 +32,7 @@ public class PostServiceImpl implements PostService {
     private final GetTopPostUseCase getTopPostUseCase;
     private final GetPostPreviewUseCase getPostPreviewUseCase;
     private final SearchPostUseCase searchPostUseCase;
+    private final GetUserUseCase getUserUseCase;
 
     @Override
     public void createPost(CreatePostRequest request) {
@@ -62,12 +65,17 @@ public class PostServiceImpl implements PostService {
     public GetPostsResponse getPosts(String sortType) {
         List<PostPreview> postPreviews = new ArrayList<PostPreview>();
         for (Post post : getPostsUseCase.execute(sortType)) {
+            User user = getUserUseCase.execute(post.getWriter());
             postPreviews.add(PostPreview.builder()
             .postId(post.getPostNumber())
             .content(post.getContent())
             .comments((long) getCommentsUseCase.execute(post.getPostNumber()).size())
-            .hearts((long) getHeartsUseCase.execute(post.getPostNumber()).size())
-            .writerEmail(post.getWriter())
+            .hearts(getHeartsUseCase.execute(post.getPostNumber()))
+            .writer(UserPreview.builder()
+                    .email(user.getEmail())
+                    .nickname(user.getNickname())
+                    .imageUri(user.getImageUri())
+                    .build())
             .createdAt(post.getCreatedAt())
             .build());
         }
@@ -93,12 +101,17 @@ public class PostServiceImpl implements PostService {
     public GetSympatheticPostsResponse getSympatheticPosts() {
         List<PostPreview> postPreviews = new ArrayList<PostPreview>();
         for (Post post : getSympatheticPostsUseCase.execute(authenticationFacade.getEmail())) {
+            User user = getUserUseCase.execute(post.getWriter());
             postPreviews.add(PostPreview.builder()
                     .postId(post.getPostNumber())
                     .content(post.getContent())
                     .comments((long) getCommentsUseCase.execute(post.getPostNumber()).size())
-                    .hearts((long) getHeartsUseCase.execute(post.getPostNumber()).size())
-                    .writerEmail(post.getWriter())
+                    .hearts(getHeartsUseCase.execute(post.getPostNumber()))
+                    .writer(UserPreview.builder()
+                            .email(user.getEmail())
+                            .nickname(user.getNickname())
+                            .imageUri(user.getImageUri())
+                            .build())
                     .createdAt(post.getCreatedAt())
                     .build());
         }
@@ -139,9 +152,14 @@ public class PostServiceImpl implements PostService {
         List<PostPreview> postPreviews = new ArrayList<PostPreview>();
         for (Long postId: getTopPostUseCase.execute()) {
             Post post = getPostPreviewUseCase.execute(postId);
+            User user = getUserUseCase.execute(post.getWriter());
             postPreviews.add(PostPreview.builder()
-            .writerEmail(post.getWriter())
-            .hearts((long) getHeartsUseCase.execute(postId).size())
+            .writer(UserPreview.builder()
+                    .email(user.getEmail())
+                    .nickname(user.getNickname())
+                    .imageUri(user.getImageUri())
+                    .build())
+            .hearts(getHeartsUseCase.execute(postId))
             .comments((long) getCommentsUseCase.execute(postId).size())
             .content(post.getContent())
             .postId(post.getPostNumber())
@@ -155,9 +173,14 @@ public class PostServiceImpl implements PostService {
     public GetPostsResponse getPostsWithSearch(String q) {
         List<PostPreview> postPreviews = new ArrayList<PostPreview>();
         for (Post post: searchPostUseCase.execute(q)) {
+            User user = getUserUseCase.execute(post.getWriter());
             postPreviews.add(PostPreview.builder()
-                    .writerEmail(post.getWriter())
-                    .hearts((long) getHeartsUseCase.execute(post.getPostNumber()).size())
+                    .writer(UserPreview.builder()
+                            .email(user.getEmail())
+                            .nickname(user.getNickname())
+                            .imageUri(user.getImageUri())
+                            .build())
+                    .hearts(getHeartsUseCase.execute(post.getPostNumber()))
                     .comments((long) getCommentsUseCase.execute(post.getPostNumber()).size())
                     .content(post.getContent())
                     .postId(post.getPostNumber())
