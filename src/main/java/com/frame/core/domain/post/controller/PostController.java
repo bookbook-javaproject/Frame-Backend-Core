@@ -32,10 +32,16 @@ public class PostController {
         return postService.getPostsWithSearch(q);
     }
 
+    @GetMapping("/user")
+    @ResponseStatus(HttpStatus.OK)
+    public GetPostsResponse getUserPosts(@RequestParam("email") String email) {
+        return postService.getUserPosts(email);
+    }
+
     @GetMapping("/my")
     @ResponseStatus(HttpStatus.OK)
-    public GetUserPostsResponse getUserPosts(@RequestParam("access-type") String accessType) {
-        return postService.getUserPosts(accessType);
+    public GetPostsResponse getMyPosts(@RequestParam("access-type") String accessType) {
+        return postService.getMyPosts(accessType);
     }
 
     @GetMapping("/my/sympathetic")

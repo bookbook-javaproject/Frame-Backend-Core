@@ -83,18 +83,47 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public GetUserPostsResponse getUserPosts(String accessType) {
-        List<UserPostPreview> userPostPreviews = new ArrayList<UserPostPreview>();
+    public GetPostsResponse getMyPosts(String accessType) {
+        List<PostPreview> postPreviews = new ArrayList<PostPreview>();
         for (Post post: getUserPostUseCase.execute(
                 authenticationFacade.getEmail(), accessType)) {
-            userPostPreviews.add(UserPostPreview.builder()
+            User user = getUserUseCase.execute(post.getWriter());
+            postPreviews.add(PostPreview.builder()
                     .postId(post.getPostNumber())
                     .content(post.getContent())
-                    .writer(post.getWriter())
+                    .comments((long) getCommentsUseCase.execute(post.getPostNumber()).size())
+                    .hearts(getHeartsUseCase.execute(post.getPostNumber()))
+                    .writer(UserPreview.builder()
+                            .email(user.getEmail())
+                            .nickname(user.getNickname())
+                            .imageUri(user.getImageUri())
+                            .build())
                     .createdAt(post.getCreatedAt())
                     .build());
         }
-        return GetUserPostsResponse.builder().userPostPreviews(userPostPreviews).build();
+        return GetPostsResponse.builder().posts(postPreviews).build();
+    }
+
+    @Override
+    public GetPostsResponse getUserPosts(String email) {
+        List<PostPreview> postPreviews = new ArrayList<PostPreview>();
+        for (Post post: getUserPostUseCase.execute(
+                email, "public")) {
+            User user = getUserUseCase.execute(post.getWriter());
+            postPreviews.add(PostPreview.builder()
+                    .postId(post.getPostNumber())
+                    .content(post.getContent())
+                    .comments((long) getCommentsUseCase.execute(post.getPostNumber()).size())
+                    .hearts(getHeartsUseCase.execute(post.getPostNumber()))
+                    .writer(UserPreview.builder()
+                            .email(user.getEmail())
+                            .nickname(user.getNickname())
+                            .imageUri(user.getImageUri())
+                            .build())
+                    .createdAt(post.getCreatedAt())
+                    .build());
+        }
+        return GetPostsResponse.builder().posts(postPreviews).build();
     }
 
     @Override

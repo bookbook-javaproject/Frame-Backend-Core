@@ -11,7 +11,9 @@ public interface PostService {
 
     public GetPostsResponse getPosts(String sortType);
 
-    public GetUserPostsResponse getUserPosts(String accessType);
+    public GetPostsResponse getUserPosts(String email);
+
+    public GetPostsResponse getMyPosts(String accessType);
 
     public GetSympatheticPostsResponse getSympatheticPosts();
 
