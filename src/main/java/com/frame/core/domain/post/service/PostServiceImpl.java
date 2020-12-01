@@ -121,9 +121,14 @@ public class PostServiceImpl implements PostService {
     @Override
     public GetPostDetailResponse getPostDetail(Long postId) {
         Post post = getPostDetailUseCase.execute(authenticationFacade.getEmail(), postId);
+        User user = getUserUseCase.execute(post.getWriter());
         return GetPostDetailResponse.builder()
                 .postId(postId)
-                .writer(post.getWriter())
+                .writer(UserPreview.builder()
+                    .email(user.getEmail())
+                    .nickname(user.getNickname())
+                    .imageUri(user.getImageUri())
+                    .build())
                 .content(post.getContent())
                 .createdAt(post.getCreatedAt())
                 .hearts(getHeartsUseCase.execute(postId))
