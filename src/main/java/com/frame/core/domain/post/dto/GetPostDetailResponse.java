@@ -13,7 +13,7 @@ import java.util.List;
 public class GetPostDetailResponse {
     private Long postId;
 
-    private String writer;
+    private UserPreview writer;
 
     private String content;
 
