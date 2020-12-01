@@ -34,6 +34,7 @@ public class PostServiceImpl implements PostService {
     private final GetPostPreviewUseCase getPostPreviewUseCase;
     private final SearchPostUseCase searchPostUseCase;
     private final GetUserUseCase getUserUseCase;
+    private final DeleteCommentUseCase deleteCommentUseCase;
 
     @Override
     public void createPost(CreatePostRequest request) {
@@ -194,6 +195,11 @@ public class PostServiceImpl implements PostService {
     @Override
     public void deletePost(DeletePostRequest request) {
         deletePostUseCase.execute(authenticationFacade.getEmail(), request.getPostId());
+    }
+
+    @Override
+    public void deleteComment(DeleteCommentRequest request) {
+        deleteCommentUseCase.execute(authenticationFacade.getEmail(), request.getPostId(), request.getCommentIndex());
     }
 
     @Override

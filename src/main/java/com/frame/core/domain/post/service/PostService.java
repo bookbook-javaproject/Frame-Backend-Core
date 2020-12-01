@@ -23,6 +23,8 @@ public interface PostService {
 
     public void deletePost(DeletePostRequest request);
 
+    public void deleteComment(DeleteCommentRequest request);
+
     public GetPostsResponse getHighlightPost();
 
     public GetPostsResponse getPostsWithSearch(String q);
