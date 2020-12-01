@@ -3,12 +3,10 @@ package com.frame.core.domain.report.domain.usecase;
 import com.frame.core.domain.post.domain.repository.PostRepository;
 import com.frame.core.domain.report.domain.entity.Report.Report;
 import com.frame.core.domain.report.domain.repository.ReportRepository;
+import com.frame.core.global.exceptions.BadRequestException;
 import com.frame.core.global.exceptions.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-
-package com.frame.core.global.error.BadRequestException;
-package com.frame.core.global.error.ErrorCode;
 
 import java.time.LocalDateTime;
 
@@ -22,8 +20,8 @@ public class CreateReportUseCaseImpl implements CreateReportUseCase {
     public void execute(String email, Long postId, String content) {
         postRepository.findById(postId).orElseThrow(NotFoundException::new);
 
-        for (Report report : reportRepository.findAllByPostId(postId)) {
-          if (report.reporter.equals(email)) throw new BadRequestException("Report is already exist.", ErrorCode.CONFLICT);
+        for (Report report : reportRepository.findAllByPostNumber(postId)) {
+          if (report.getReporter().equals(email)) throw new BadRequestException();
         }
         Report report = Report.builder()
                 .content(content)
