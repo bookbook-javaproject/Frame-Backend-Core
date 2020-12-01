@@ -79,6 +79,12 @@ public class PostController {
         postService.comment(request);
     }
 
+    @DeleteMapping("/comment")
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteComment(@RequestBody @Valid DeleteCommentRequest request) {
+        postService.deleteComment(request);
+    }
+
     @PatchMapping("/heart")
     @ResponseStatus(HttpStatus.OK)
     public void sympathize(@RequestBody @Valid SympathizeRequest request) {

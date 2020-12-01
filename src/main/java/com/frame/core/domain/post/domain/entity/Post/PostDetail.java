@@ -17,4 +17,9 @@ public class PostDetail {
     private List<String> hearts;
 
     private List<Comment> comments;
+
+    public PostDetail deleteComment(int index) {
+        comments.remove(index);
+        return this;
+    }
 }
