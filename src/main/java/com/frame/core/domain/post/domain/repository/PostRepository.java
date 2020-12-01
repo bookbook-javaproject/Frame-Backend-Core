@@ -9,5 +9,5 @@ public interface PostRepository extends CrudRepository<Post, Long> {
 
     public Iterable<Post> findAllByAccessTypeAndWriter(AccessType accessType, String writer);
 
-    public Iterable<Post> findAllByContentLikeAndAccessType(String content, AccessType accessType);
+    public Iterable<Post> findAllByContentContainsAndAccessType(String content, AccessType accessType);
 }
