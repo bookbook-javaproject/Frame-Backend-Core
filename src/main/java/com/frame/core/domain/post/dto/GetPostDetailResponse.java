@@ -21,5 +21,5 @@ public class GetPostDetailResponse {
 
     private List<String> hearts;
 
-    private List<Comment> comments;
+    private List<CommentPreview> comments;
 }

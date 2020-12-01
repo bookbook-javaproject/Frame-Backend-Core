@@ -1,5 +1,6 @@
 package com.frame.core.domain.post.service;
 
+import com.frame.core.domain.post.domain.entity.Post.Comment;
 import com.frame.core.domain.post.domain.entity.Post.Post;
 import com.frame.core.domain.post.domain.usecase.*;
 import com.frame.core.domain.post.dto.*;
@@ -151,6 +152,20 @@ public class PostServiceImpl implements PostService {
     public GetPostDetailResponse getPostDetail(Long postId) {
         Post post = getPostDetailUseCase.execute(authenticationFacade.getEmail(), postId);
         User user = getUserUseCase.execute(post.getWriter());
+        List<CommentPreview> commentPreviews = new ArrayList<CommentPreview>();
+        for (Comment comment: getCommentsUseCase.execute(postId)) {
+            User commentWriter = getUserUseCase.execute(comment.getWriter());
+            commentPreviews.add(CommentPreview.builder()
+                    .comment(comment.getComment())
+                    .createdAt(comment.getCreatedAt())
+                    .writer(UserPreview.builder()
+                            .nickname(commentWriter.getNickname())
+                            .email(commentWriter.getEmail())
+                            .imageUri(commentWriter.getImageUri())
+                            .build())
+                    .build());
+        }
+
         return GetPostDetailResponse.builder()
                 .postId(postId)
                 .writer(UserPreview.builder()
@@ -161,7 +176,7 @@ public class PostServiceImpl implements PostService {
                 .content(post.getContent())
                 .createdAt(post.getCreatedAt())
                 .hearts(getHeartsUseCase.execute(postId))
-                .comments(getCommentsUseCase.execute(postId))
+                .comments(commentPreviews)
                 .build();
     }
 
