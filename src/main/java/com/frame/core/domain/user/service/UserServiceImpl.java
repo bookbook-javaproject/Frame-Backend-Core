@@ -1,5 +1,6 @@
 package com.frame.core.domain.user.service;
 
+import com.frame.core.domain.post.dto.UserPreview;
 import com.frame.core.domain.user.domain.entity.EmailAuth;
 import com.frame.core.domain.user.domain.entity.User;
 import com.frame.core.domain.user.domain.usecase.*;
@@ -8,6 +9,9 @@ import com.frame.core.infra.springBoot.security.AuthenticationFacade;
 import com.frame.core.infra.springBoot.security.JwtProvider;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -89,9 +93,34 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public GetRelationResponse getRelation(String email) {
+        List<UserPreview> followers = new ArrayList<UserPreview>();
+        List<UserPreview> followings = new ArrayList<UserPreview>();
+
+        for (String userEmail: getFollowerUseCase.execute(email)){
+            User user = getUserUseCase.execute(userEmail);
+            followers.add(
+                    UserPreview.builder()
+                            .nickname(user.getNickname())
+                            .email(user.getEmail())
+                            .imageUri(user.getImageUri())
+                            .build()
+            );
+        }
+
+        for (String userEmail: getFollowingUseCase.execute(email)){
+            User user = getUserUseCase.execute(userEmail);
+            followings.add(
+                    UserPreview.builder()
+                            .nickname(user.getNickname())
+                            .email(user.getEmail())
+                            .imageUri(user.getImageUri())
+                            .build()
+            );
+        }
+
        return GetRelationResponse.builder()
-               .follower(getFollowerUseCase.execute(email))
-               .following(getFollowingUseCase.execute(email))
+               .follower(followers)
+               .following(followings)
                .build();
     }
 
