@@ -22,4 +22,8 @@ public class GetPostDetailResponse {
     private List<String> hearts;
 
     private List<CommentPreview> comments;
+    
+    private String accessType;
+    
+    private String contentType;
 }
