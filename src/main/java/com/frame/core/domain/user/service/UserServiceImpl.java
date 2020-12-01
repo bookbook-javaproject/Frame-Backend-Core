@@ -39,6 +39,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public GetUserResponse getUser(String email) {
+        User user = getUserUseCase.execute(email);
+        return GetUserResponse.builder()
+                .email(user.getEmail())
+                .favoriteType(String.valueOf(user.getFavoriteType()))
+                .nickname(user.getNickname())
+                .imageUri(user.getImageUri())
+                .description(user.getDescription())
+                .build();
+    }
+
+    @Override
     public void registerService(RegisterRequest request) {
         sendAuthEmailUseCase.execute(request.getEmail(), request.getNickname(), request.getPassword());
     }

@@ -5,6 +5,8 @@ import com.frame.core.domain.user.dto.*;
 public interface UserService {
     public GetUserResponse getUser();
 
+    public GetUserResponse getUser(String email);
+
     public void registerService(RegisterRequest request);
 
     public LoginResponse login(LoginRequest request);

@@ -15,10 +15,16 @@ import javax.validation.Valid;
 public class UserController {
     private final UserService userService;
 
-    @GetMapping
+    @GetMapping("/my")
     @ResponseStatus(value = HttpStatus.OK)
     public GetUserResponse getUser() {
         return userService.getUser();
+    }
+
+    @GetMapping
+    @ResponseStatus(value = HttpStatus.OK)
+    public GetUserResponse getUser(@RequestParam("email") String email) {
+        return userService.getUser(email);
     }
 
     @PostMapping
