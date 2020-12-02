@@ -167,7 +167,7 @@ public class PostServiceImpl implements PostService {
                             .nickname(commentWriter.getNickname())
                             .email(commentWriter.getEmail())
                             .imageUri(commentWriter.getImageUri())
-                            .userType(user.getUserType() != null ? String.valueOf(user.getUserType().name()) : null)
+                            .userType(commentWriter.getUserType() != null ? String.valueOf(commentWriter.getUserType().name()) : null)
                             .build())
                     .build());
         }
