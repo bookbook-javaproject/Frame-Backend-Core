@@ -15,6 +15,4 @@ public class UserPreview {
     private String nickname;
 
     private String imageUri;
-    
-    private String userType;
 }
