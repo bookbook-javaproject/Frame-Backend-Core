@@ -5,7 +5,7 @@ import com.frame.core.domain.post.domain.entity.Post.enums.AccessType;
 import org.springframework.data.repository.CrudRepository;
 
 public interface PostRepository extends CrudRepository<Post, Long> {
-    public Iterable<Post> findAllByAccessTypeOrderByPostNumberAsc(AccessType accessType);
+    public Iterable<Post> findAllByAccessTypeOrderByPostNumberDesc(AccessType accessType);
 
     public Iterable<Post> findAllByAccessTypeAndWriter(AccessType accessType, String writer);
 
