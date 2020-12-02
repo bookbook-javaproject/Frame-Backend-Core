@@ -236,6 +236,7 @@ public class PostServiceImpl implements PostService {
                             .email(user.getEmail())
                             .nickname(user.getNickname())
                             .imageUri(user.getImageUri())
+                            .userType(user.getUserType() != null ? String.valueOf(user.getUserType().name()) : null)
                             .build())
                     .hearts(getHeartsUseCase.execute(post.getPostNumber()))
                     .comments((long) getCommentsUseCase.execute(post.getPostNumber()).size())
