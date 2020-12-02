@@ -39,6 +39,7 @@ public class UserServiceImpl implements UserService {
                 .nickname(user.getNickname())
                 .imageUri(user.getImageUri())
                 .description(user.getDescription())
+                .userType(user.getUserType())
                 .build();
     }
 
@@ -103,7 +104,6 @@ public class UserServiceImpl implements UserService {
                             .nickname(user.getNickname())
                             .email(user.getEmail())
                             .imageUri(user.getImageUri())
-                            .userType(user.getUserType())
                             .build()
             );
         }
