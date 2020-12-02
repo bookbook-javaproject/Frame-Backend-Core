@@ -39,7 +39,7 @@ public class UserServiceImpl implements UserService {
                 .nickname(user.getNickname())
                 .imageUri(user.getImageUri())
                 .description(user.getDescription())
-                .userType(user.getUserType())
+                .userType(user.getUserType().name())
                 .build();
     }
 
