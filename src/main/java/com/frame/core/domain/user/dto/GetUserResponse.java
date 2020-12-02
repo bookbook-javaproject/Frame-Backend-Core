@@ -15,4 +15,6 @@ public class GetUserResponse {
     private String description;
 
     private String favoriteType;
+    
+    private String userType;
 }
