@@ -1,6 +1,7 @@
 package com.frame.core.domain.submission.service;
 
 import com.frame.core.domain.submission.domain.usecase.CertifyEmailUseCase;
+import com.frame.core.domain.submission.domain.usecase.CreateAnthologyApplicationUseCase;
 import com.frame.core.domain.submission.domain.usecase.CreateAuthorApplicationUseCase;
 import com.frame.core.domain.submission.domain.usecase.SendEmailForAuthUseCase;
 import com.frame.core.domain.submission.dto.ApplyAnthologyRequest;
@@ -16,12 +17,15 @@ public class SubmissionServiceImpl implements SubmissionService {
     private final AuthenticationFacade authenticationFacade;
 
     private final CertifyEmailUseCase certifyEmailUseCase;
+    private final CreateAnthologyApplicationUseCase createAnthologyApplicationUseCase;
     private final CreateAuthorApplicationUseCase createAuthorApplicationUseCase;
     private final SendEmailForAuthUseCase sendEmailForAuthUseCase;
 
     @Override
     public void applyAnthology(ApplyAnthologyRequest request) {
-
+        createAnthologyApplicationUseCase.execute(
+                authenticationFacade.getEmail(), request.getLink(), request.getFileId()
+        );
     }
 
     @Override
