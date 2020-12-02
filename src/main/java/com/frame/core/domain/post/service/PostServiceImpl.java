@@ -178,6 +178,8 @@ public class PostServiceImpl implements PostService {
                 .createdAt(post.getCreatedAt())
                 .hearts(getHeartsUseCase.execute(postId))
                 .comments(commentPreviews)
+                .accessType(post.getAccessType().name())
+                .contentType(post.getContentType().name())
                 .build();
     }
 
