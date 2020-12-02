@@ -77,6 +77,7 @@ public class PostServiceImpl implements PostService {
                     .email(user.getEmail())
                     .nickname(user.getNickname())
                     .imageUri(user.getImageUri())
+                     .userType(user.getUserType() != null ? String.valueOf(user.getUserType().name()) : null)
                     .build())
             .createdAt(post.getCreatedAt())
             .build());
@@ -99,6 +100,7 @@ public class PostServiceImpl implements PostService {
                             .email(user.getEmail())
                             .nickname(user.getNickname())
                             .imageUri(user.getImageUri())
+                            .userType(user.getUserType() != null ? String.valueOf(user.getUserType().name()) : null)
                             .build())
                     .createdAt(post.getCreatedAt())
                     .build());
@@ -121,6 +123,7 @@ public class PostServiceImpl implements PostService {
                             .email(user.getEmail())
                             .nickname(user.getNickname())
                             .imageUri(user.getImageUri())
+                            .userType(user.getUserType() != null ? String.valueOf(user.getUserType().name()) : null)
                             .build())
                     .createdAt(post.getCreatedAt())
                     .build());
@@ -142,6 +145,7 @@ public class PostServiceImpl implements PostService {
                             .email(user.getEmail())
                             .nickname(user.getNickname())
                             .imageUri(user.getImageUri())
+                            .userType(user.getUserType() != null ? String.valueOf(user.getUserType().name()) : null)
                             .build())
                     .createdAt(post.getCreatedAt())
                     .build());
@@ -163,6 +167,7 @@ public class PostServiceImpl implements PostService {
                             .nickname(commentWriter.getNickname())
                             .email(commentWriter.getEmail())
                             .imageUri(commentWriter.getImageUri())
+                            .userType(user.getUserType() != null ? String.valueOf(user.getUserType().name()) : null)
                             .build())
                     .build());
         }
@@ -173,6 +178,7 @@ public class PostServiceImpl implements PostService {
                     .email(user.getEmail())
                     .nickname(user.getNickname())
                     .imageUri(user.getImageUri())
+                    .userType(user.getUserType() != null ? String.valueOf(user.getUserType().name()) : null)
                     .build())
                 .content(post.getContent())
                 .createdAt(post.getCreatedAt())
@@ -215,6 +221,7 @@ public class PostServiceImpl implements PostService {
                     .email(user.getEmail())
                     .nickname(user.getNickname())
                     .imageUri(user.getImageUri())
+                    .userType(user.getUserType() != null ? String.valueOf(user.getUserType().name()) : null)
                     .build())
             .hearts(getHeartsUseCase.execute(postId))
             .comments((long) getCommentsUseCase.execute(postId).size())
@@ -236,6 +243,7 @@ public class PostServiceImpl implements PostService {
                             .email(user.getEmail())
                             .nickname(user.getNickname())
                             .imageUri(user.getImageUri())
+                            .userType(user.getUserType() != null ? String.valueOf(user.getUserType().name()) : null)
                             .userType(user.getUserType() != null ? String.valueOf(user.getUserType().name()) : null)
                             .build())
                     .hearts(getHeartsUseCase.execute(post.getPostNumber()))
