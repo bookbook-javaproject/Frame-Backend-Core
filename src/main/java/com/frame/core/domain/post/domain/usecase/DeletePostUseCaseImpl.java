@@ -1,6 +1,7 @@
 package com.frame.core.domain.post.domain.usecase;
 
 import com.frame.core.domain.post.domain.entity.Post.Post;
+import com.frame.core.domain.post.domain.repository.PostDetailRepository;
 import com.frame.core.domain.post.domain.repository.PostRepository;
 import com.frame.core.domain.user.domain.exception.UnAuthorizedException;
 import com.frame.core.global.exceptions.NotFoundException;
@@ -13,6 +14,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class DeletePostUseCaseImpl implements DeletePostUseCase {
     private final PostRepository postRepository;
+    private final PostDetailRepository postDetailRepository;
 
     @Override
     public void execute(String email, Long postId) {
@@ -25,5 +27,6 @@ public class DeletePostUseCaseImpl implements DeletePostUseCase {
             throw new UnAuthorizedException();
         }
         postRepository.deleteById(postId);
+        postDetailRepository.deleteById(postId);
     }
 }
