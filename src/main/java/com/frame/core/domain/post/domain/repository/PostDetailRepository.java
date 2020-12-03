@@ -5,4 +5,6 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 public interface PostDetailRepository extends MongoRepository<PostDetail, Long> {
     public Iterable<PostDetail> findTop10ByOrderByHearts();
+
+    public Iterable<PostDetail> findTop10ByOrderByHeartsDesc();
 }

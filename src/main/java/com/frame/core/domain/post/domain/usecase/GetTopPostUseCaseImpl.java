@@ -22,7 +22,7 @@ public class GetTopPostUseCaseImpl implements GetTopPostUseCase {
     public List<Long> execute() {
         List<Long> postIds = new ArrayList<Long>();
 
-        for (PostDetail postDetail: postDetailRepository.findTop10ByOrderByHearts()) {
+        for (PostDetail postDetail: postDetailRepository.findTop10ByOrderByHeartsDesc()) {
             postIds.add(postDetail.getPostNumber());
         }
 
