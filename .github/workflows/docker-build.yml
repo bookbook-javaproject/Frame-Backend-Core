@@ -27,7 +27,7 @@ jobs:
         run: docker build -t migsking/java-project-frame .
 
       - name: publish to Registry
-        uses: elgohr/Publish-Docker-Github-Action@master
+        uses: elgohr/Publish-Docker-Github-Action@v5
         with:
           name: migsking/java-project-frame
           username: ${{ secrets.DOCKER_USERNAME }}
